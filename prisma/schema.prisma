@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model categories {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(120)
+  services services[]
+}
+
+model clients {
+  id        Int      @id @default(autoincrement())
+  full_name String   @db.VarChar(150)
+  phone     String   @unique @db.VarChar(20)
+  email     String?  @db.VarChar(100)
+  orders    orders[]
+}
+
+model masters {
+  id        Int      @id @default(autoincrement())
+  full_name String   @db.VarChar(150)
+  phone     String   @unique @db.VarChar(20)
+  email     String?  @db.VarChar(100)
+  address   String?
+  orders    orders[]
+}
+
+model orders {
+  id          Int       @id @default(autoincrement())
+  client_id   Int?
+  status      String?   @default("created") @db.VarChar(50)
+  master_id   Int?
+  partner_id  Int?
+  total_price Int?
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  description String?
+  address     String?
+
+  clients  clients?  @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  masters  masters?  @relation(fields: [master_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partners partners? @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([client_id], map: "orders_client_fkey")
+  @@index([master_id], map: "orders_master_fkey")
+  @@index([partner_id], map: "orders_partner_fkey")
+}
+
+model partners {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(180)
+  contact_person String   @db.VarChar(180)
+  phone          String   @unique @db.VarChar(20)
+  address        String?
+  unp            String   @unique @db.VarChar(9)
+  specialization String
+  is_active      Boolean  @default(true)
+  orders         orders[]
+}
+
+model services {
+  id              Int         @id @default(autoincrement())
+  name            String?     @db.VarChar(90)
+  price           Int
+  unit            PricingUnit @default(FIXED)
+  isStartingPrice Boolean     @default(false)
+  category        Int?
+  description     String?
+  device_type     DeviceType  @default(COMMON)
+  displayOrder    Int         @default(0)
+  categories      categories? @relation(fields: [category], references: [id], onUpdate: SetNull, map: "services_category_id_fkey")
+
+  @@index([category], map: "services_category_fkey")
+}
+
+enum PricingUnit {
+  FIXED
+  PER_HOUR
+  PER_ITEM
+}
+
+enum DeviceType {
+  DESKTOP
+  LAPTOP
+  COMMON
+}

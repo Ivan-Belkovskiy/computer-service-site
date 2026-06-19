@@ -1,0 +1,123 @@
+.new-order-modal__overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    background-color: #000000a8;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.25s ease 0s;
+    pointer-events: none;
+}
+
+.new-order-modal__overlay.opened {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.new-order-modal {
+    position: relative;
+    width: 90%;
+    min-height: 90%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px 0;
+    scale: 0.9;
+    translate: 0 -30px;
+    transition: all 0.25s ease 0s;
+}
+
+.new-order-modal__messagebox {
+    font-size: 18px;
+    color: #a100a7;
+}
+
+.new-order-modal__overlay.opened .new-order-modal {
+    translate: 0 0;
+    scale: 1;
+}
+
+.new-order-modal__title {
+    font-size: 28px;
+    color: #a100a7;
+    margin-bottom: 20px;
+}
+
+.new-order-modal__input {
+    width: 90%;
+    border: 1px solid #a100a7;
+    border-radius: 4px;
+    padding: 7px 5px;
+    color: #a100a7;
+    margin: 5px;
+    font-size: 17px;
+    outline: none;
+}
+
+.new-order-modal__button.submit-button {
+    width: 90%;
+    border: 1px solid #a100a7;
+    border-radius: 4px;
+    padding: 13px 3px;
+    color: #fff;
+    background-color: #a100a7;
+    margin: 5px;
+    font-size: 17px;
+    outline: none;
+    transition: all 0.3s ease 0s;
+}
+
+.new-order-modal__button.submit-button:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #a100a7;
+}
+
+.new-order-modal__button.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #a100a7;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 30px;
+    transition: all 0.3s ease 0s;
+    background-color: transparent;
+    /* background-color: #000000; */
+}
+
+.new-order-modal__input.validation-error {
+    outline: 2px solid #ff0000;
+}
+
+.new-order-modal__error {
+    color: #ff0000;
+    font-size: 14px;
+}
+
+@media (min-width: 1024px) {
+
+    .new-order-modal {
+        width: 40%;
+        min-height: 25%;
+    }
+
+    .new-order-modal__button.close-btn:hover {
+        background-color: #a100a7;
+        color: #fff;
+        /* rotate: 180deg; */
+        cursor: pointer;
+    }
+
+}

@@ -1,0 +1,126 @@
+.features-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.features-section__title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #720281;
+    color: #fff;
+    font-size: 1.65rem;
+    padding: 12px;
+}
+
+.features-section__content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.features-section .feature-block {
+    position: relative;
+    width: 100%;
+    border: 3px solid #720281;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #720281;
+    user-select: none;
+    transition: all 0.3s ease 0s;
+}
+
+.features-section .feature-block::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 15px 10px #720281;
+    opacity: 0;
+    transition: inherit;
+}
+
+/* .features-section .feature-block:hover {
+    background-color: #720281;
+    color: #fff;
+}
+
+.features-section .feature-block:hover .feature-block__number {
+    background-color: #fff;
+    color: #720281;
+}
+
+.features-section .feature-block:hover::after {
+    opacity: 1;
+} */
+
+.features-section .feature-block__number {
+    width: 50px;
+    height: 50px;
+    background-color: #720281;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border-radius: 50px;
+    margin-right: 20px;
+    transition: inherit;
+}
+
+.features-section .feature-block__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.features-section .feature-block__title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.features-section .feature-block__description {
+    margin: 5px 0;
+}
+
+
+@media (min-width: 1024px) {
+
+    .features-section {
+        padding: 40px 0;
+    }
+
+    .features-section__title {
+        margin-bottom: 15px;
+        font-size: 32px;
+    }
+
+    .features-section .feature-block:hover {
+        background-color: #720281;
+        color: #fff;
+    }
+
+    .features-section .feature-block:hover .feature-block__number {
+        background-color: #fff;
+        color: #720281;
+    }
+
+    .features-section .feature-block:hover::after {
+        opacity: 1;
+    }
+
+}

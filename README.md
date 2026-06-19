@@ -1,3 +1,10 @@
+```js
+
+// Services display order range: (DESKTOP: 1 - 199 | LAPTOP: 200 - 399 | COMMON: 400 - 499)
+
+```
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

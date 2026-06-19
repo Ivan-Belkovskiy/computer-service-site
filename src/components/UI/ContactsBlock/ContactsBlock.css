@@ -1,0 +1,15 @@
+.contacts-block {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.contacts-block__span.phone-number {
+    letter-spacing: 1px;
+    transition: all 0.3s ease 0s;
+}
+
+.contacts-block.light .contacts-block__span.phone-number:hover {
+    color: #ff55d4;
+}

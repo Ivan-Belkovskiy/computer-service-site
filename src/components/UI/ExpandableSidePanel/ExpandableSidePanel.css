@@ -1,0 +1,50 @@
+.expandable-sidepanel__overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    background-color: transparent;
+    z-index: 10;
+    transition: all 0.2s ease 0s;
+    pointer-events: none;
+}
+
+.expandable-sidepanel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    transition: all 0.4s ease 0s;
+    margin-right: -100%;
+
+    padding-top: 80px;
+}
+
+.expandable-sidepanel__overlay.expanded {
+    background-color: #00000083;
+    pointer-events: all;
+}
+
+.expandable-sidepanel__overlay.expanded .expandable-sidepanel {
+    margin-right: 0%;
+
+}
+
+.expandable-sidepanel__element {
+    width: 100%;
+    color: #4e0158;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.expandable-sidepanel__element:not(:first-child) {
+    border-top: 2px solid #4e0158;
+}
