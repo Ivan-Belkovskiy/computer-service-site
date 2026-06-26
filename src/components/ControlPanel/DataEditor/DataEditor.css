@@ -1,0 +1,139 @@
+.data-editor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.data-editor__header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #4e0158;
+    color: #fff;
+    font-size: 20px;
+}
+
+.data-editor__title {
+    width: 100%;
+    background-color: #4e0158;
+    color: #fff;
+    font-size: 22px;
+    padding: 4px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-editor__subtitle {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 0 35px;
+    color: #4e0158;
+    font-size: 20px;
+}
+
+.data-editor__content {
+    position: relative;
+    min-width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.data-editor__block {
+    /* width: 80%; */
+    border: 3px solid #4e0158;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    color: #4e0158;
+}
+
+.data-editor__input {
+    min-width: 400px;
+    border: 3px solid #4e0158;
+    margin-left: 10px;
+    padding: 0 5px;
+    color: #4e0158;
+}
+
+.data-editor__input:focus {
+    outline: 2px solid #ff00ff;
+}
+
+.data-editor__select {
+    cursor: pointer;
+    min-width: 300px;
+    background-color: #4e0158;
+    margin-left: 10px;
+    padding: 5px;
+    color: #fff;
+}
+
+.data-editor__select:focus {
+    outline: 2px solid #ff00ff;
+}
+
+
+.data-editor__buttons {
+    margin-top: 10px;
+}
+
+.data-editor__button {
+    background-color: #4e0158;
+    padding: 10px 20px;
+    color: #fff;
+    transition: all 0.3s ease 0s;
+}
+
+.data-editor__button:hover {
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: #005fdb;
+}
+
+.data-editor__list {
+    border: 3px solid #4e0158;
+    padding: 10px;
+    overflow-y: auto;
+
+    max-height: 400px;
+}
+
+.data-editor__input.price-input {
+    min-width: 100px;
+    margin: 0 7px;
+}
+
+.data-editor__select.price-unit-select {
+    border: 2px solid #4e0158;
+    background-color: #fff;
+    color: #4e0158;
+    min-width: 100px;
+}
+
+
+.data-editor__input.starting-price-checkbox {
+    min-width: auto;
+    /* width: 30px; */
+}
+
+.data-editor__label {
+    margin-left: 10px;
+}
+
+.data-editor__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

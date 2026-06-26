@@ -1,0 +1,81 @@
+.control-panel-navigation__container {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+}
+
+.control-panel-navigation {
+    width: 100%;
+    background-color: #e7f5ff;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 50;
+    color: #4e0158;
+}
+
+.control-panel-navigation__title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.control-panel-navigation__left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control-panel-navigation__middle {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control-panel-navigation__right {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.control-panel-navigation__button {
+    padding: 9px 16px;
+    transition: all 0.45s ease 0s;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4e0158;
+    background: linear-gradient(90deg, #00000000 0%, #4e0158 70%, #4e0158 100%, #4e0158 140%);
+    /* background-size: 100%; */
+    background-size: 490%;
+    background-repeat: no-repeat;
+    background-position-x: -50%;
+}
+
+.control-panel-navigation__button.link:hover {
+    background-position-x: 90%;
+    color: #fff;
+    cursor: pointer;
+}
+
+.control-panel-navigation__button.return-to-site-btn {
+    background-color: #4e0158;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease 0s;
+    height: auto;
+    padding: 8px;
+    border: 2px solid transparent;
+    margin-right: 15px;
+}
+
+.control-panel-navigation__button.return-to-site-btn:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #4e0158;
+    border: 2px solid #4e0158;
+}
