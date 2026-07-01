@@ -6,8 +6,8 @@ import Image from "next/image";
 import SVGIcon from "@/components/SVGIcon/SVGIcon";
 import SiteNavigation from "@/components/UI/SiteNavigation/SiteNavigation";
 import SiteFooter from "@/components/Site/SiteFooter/SiteFooter";
-import SiteLayout from "@/components/AppLayout";
-import { loadMetadata } from "./actions";
+import AppLayout from "@/components/AppLayout";
+import { getSiteSettings, loadMetadata } from "./actions";
 
 
 const geistSans = Geist({
@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 export async function generateMetadata(): Promise<Metadata> {
   const meta = await loadMetadata();
   return {
-    title: meta?.data?.title || "Компьютерный Сервис",
+    title: meta?.data?.title || "Computer-Service-Site",
     description: meta?.data?.description || "Ремонт компьютеров и ноутбуков",
   };
 }
@@ -33,11 +33,14 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const response = await getSiteSettings();
+  const settings = response.data || {};
 
   return (
     <html
@@ -46,7 +49,7 @@ export default function RootLayout({
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
 
-        <SiteLayout>{children}</SiteLayout>
+        <AppLayout siteSettings={settings}>{children}</AppLayout>
 
       </body>
     </html >

@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { CSSProperties } from "react";
 
-export default function SVGIcon({ imgSrc, width, height, style }: { imgSrc: string, width: number, height: number, style?: CSSProperties }) {
+export default function SVGIcon({ className, imgSrc, width, height, style }: { className?: string, imgSrc: string, width: number, height: number, style?: CSSProperties }) {
     return (
         <Image
+            className={className}
             style={{
                 display: 'inline-block',
                 userSelect: 'none',

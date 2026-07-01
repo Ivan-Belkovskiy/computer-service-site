@@ -6,7 +6,7 @@ import SiteNavigation from "./UI/SiteNavigation/SiteNavigation";
 import { usePathname } from "next/navigation";
 import ControlPanelNavigation from "./ControlPanel/ControlPanelNavigation/ControlPanelNavigation";
 
-export default function SiteLayout({ children }: { children?: ReactNode }) {
+export default function AppLayout({ children, siteSettings }: { children?: ReactNode, siteSettings?: Record<string, string> }) {
 
   const url = usePathname();
 
@@ -14,9 +14,9 @@ export default function SiteLayout({ children }: { children?: ReactNode }) {
 
   return (
     <>
-      {isControlPanel ? <ControlPanelNavigation /> : <SiteNavigation />}
+      {isControlPanel ? <ControlPanelNavigation /> : <SiteNavigation settings={siteSettings} />}
       <main>{children}</main>
-      {!isControlPanel && <SiteFooter />}
+      {!isControlPanel && <SiteFooter settings={siteSettings} />}
     </>
   )
 }

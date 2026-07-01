@@ -19,7 +19,8 @@ export default function HeroSection() {
                 className="object-cover object-center z-[-1]"
             />
 
-            <div className="absolute inset-0 bg-black/60 z-0"></div>
+            <div className="hero-section__overlay"></div>
+            {/* <div className="absolute inset-0 bg-black/60 z-0"></div> */}
 
             <div className="hero-section__content">
                 <h1 className='hero-section__title'>Профессиональное обслуживание и ремонт компьютеров в Минске</h1>
@@ -30,7 +31,7 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} />
+            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} onSubmit={() => setModalOpened(false)} />
 
         </section>
     )

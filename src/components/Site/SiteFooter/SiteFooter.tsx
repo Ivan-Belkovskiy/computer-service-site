@@ -7,7 +7,7 @@ import SiteNavigation from "@/components/UI/SiteNavigation/SiteNavigation";
 import { useState } from "react";
 import NewOrderModal from "@/components/UI/NewOrderModal/NewOrderModal";
 
-export default function SiteFooter() {
+export default function SiteFooter({ settings }: { settings?: Record<string, string> }) {
 
     const [isModalOpened, setModalOpened] = useState(false);
 
@@ -25,12 +25,15 @@ export default function SiteFooter() {
                     <p>Профессиональное обслуживание и ремонт компьютеров в Минске</p>
                 </div>
                 <div className="site-footer__column">
-                   <span className="site-footer__heading">Навигация</span>
-                   <SiteNavigation menuOnly />
+                    <span className="site-footer__heading">Навигация</span>
+                    <SiteNavigation menuOnly />
                 </div>
                 <div className="site-footer__column">
                     <span className="site-footer__heading">Контактная информация</span>
-                    <ContactsBlock lightIcons style={{ gap: '6px', alignItems: 'start' }} />
+                    <ContactsBlock lightIcons style={{ gap: '6px', alignItems: 'start' }} initialSettings={{
+                        contact_phone: settings?.contact_phone,
+                        work_hours: settings?.work_hours
+                    }} />
                     <button className="site-footer__button" onClick={() => setModalOpened(true)}>Оставить заявку</button>
                 </div>
             </div>

@@ -1,0 +1,115 @@
+.contacts-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 5px; */
+}
+
+.contacts-section__title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #720281;
+    color: #fff;
+    font-size: 1.65rem;
+    padding: 12px;
+}
+
+.contacts-section__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* gap: 15px; */
+    align-items: center;
+    padding: 80px 0;
+}
+
+.contacts-section__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contacts-section__info {
+    display: flex;
+    align-items: center;
+}
+
+.contacts-section__icon {
+    margin-left: 5px;
+}
+
+.contacts-section__label {
+    color: #720281;
+    margin-left: 5px;
+}
+
+.contacts-section__link {
+    color: #720281;
+    margin-left: 5px;
+}
+
+.contacts-section__button.new-order-btn {
+    margin-top: 15px;
+    background-color: #720281;
+    padding: 8px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+@media (min-width: 1024px) {
+
+    .contacts-section {
+        padding: 0px 0;
+    }
+
+    .contacts-section__content {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+
+
+    .contacts-section__title {
+        margin-bottom: 15px;
+        font-size: 32px;
+    }
+
+    .contacts-section .feature-block:hover {
+        background-color: #720281;
+        color: #fff;
+    }
+
+    .contacts-section .feature-block:hover .feature-block__number {
+        background-color: #fff;
+        color: #720281;
+    }
+
+    .contacts-section .feature-block:hover::after {
+        opacity: 1;
+    }
+
+    .contacts-section__link {
+        transition: all 0.25s ease 0s;
+    }
+
+    .contacts-section__link:hover {
+        color: #c70f99;
+    }
+
+    .contacts-section__button.new-order-btn {
+        outline: 2px solid transparent;
+        transition: all 0.3s ease 0s;
+    }
+
+    .contacts-section__button.new-order-btn:hover {
+        outline-color: #720281;
+        background-color: #fff;
+        color: #720281;
+        cursor: pointer;
+    }
+
+}

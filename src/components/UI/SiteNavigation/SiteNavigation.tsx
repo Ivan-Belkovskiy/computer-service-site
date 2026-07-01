@@ -8,7 +8,7 @@ import { useState } from "react";
 import ExpandableSidePanel from "../ExpandableSidePanel/ExpandableSidePanel";
 import ContactsBlock from "../ContactsBlock/ContactsBlock";
 
-export default function SiteNavigation({ menuOnly }: { menuOnly?: boolean; }) {
+export default function SiteNavigation({ settings, menuOnly }: { settings?: Record<string, string>, menuOnly?: boolean; }) {
 
     const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 
@@ -63,7 +63,10 @@ export default function SiteNavigation({ menuOnly }: { menuOnly?: boolean; }) {
 
                 <ul className="site-navigation__right --desktop-only">
                     <li className="site-navigation__button">
-                        <ContactsBlock />
+                        <ContactsBlock initialSettings={{
+                            contact_phone: settings?.contact_phone,
+                            work_hours: settings?.work_hours
+                        }} />
                         {/* <div className="site-navigation__contacts-block">
                             <span>
                                 <SVGIcon

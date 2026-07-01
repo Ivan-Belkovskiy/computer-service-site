@@ -1,0 +1,97 @@
+.control-panel-login-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-panel-login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control-panel-login-form__title {
+    width: 100%;
+    background-color: #720281;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1.65rem;
+    padding: 12px;
+    margin-top: 5px;
+}
+
+.control-panel-login-form__field {
+    margin-top: 5px;
+    color: #720281;
+    font-size: 17px;
+}
+
+.control-panel-login-form__input {
+    border: 2px solid #720281;
+    padding: 2px;
+    margin-left: 10px;
+    font-size: 18px;
+    outline: none;
+}
+
+.control-panel-login-form__input:focus {
+    outline: 2px solid #ff00ea;
+}
+
+.control-panel-login-form__button {
+    width: 60%;
+    border-radius: 8px;
+    background-color: #720281;
+    padding: 7px;
+    font-size: 18px;
+    color: #fff;
+    margin-top: 15px;
+}
+
+.control-panel-login-form__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.control-panel-login-form__error {
+    width: 60%;
+    margin-top: 15px;
+    padding: 6px 4px;
+    background-color: #ffdcdc;
+    color: #b40000;
+}
+
+
+@media (min-width: 1024px) {
+
+    .control-panel-login-form {
+        width: 50%;
+    }
+
+    .control-panel-login-form__title {
+        font-size: 27px;
+        margin-top: 20px;
+    }
+
+    .control-panel-login-form__field {
+        margin-top: 20px;
+    }
+
+    .control-panel-login-form__button {
+        transition: all 0.3s ease 0s;
+        outline: 2px solid transparent;
+    }
+
+    .control-panel-login-form__button:hover {
+        background-color: #fff;
+        outline-color: #720281;
+        color: #720281;
+        cursor: pointer;
+    }
+
+}

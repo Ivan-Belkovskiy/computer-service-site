@@ -1,1 +1,10 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27.98737" height="27.98737" viewBox="0,0,27.98737,27.98737"><g transform="translate(-226.00631,-166.00631)"><g fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10"><path d="M226.75632,180c0,-7.31429 5.9294,-13.24368 13.24369,-13.24368c7.31429,0 13.24369,5.9294 13.24369,13.24369c0,7.31429 -5.9294,13.24369 -13.24368,13.24369c-7.31429,0 -13.24368,-5.9294 -13.24368,-13.24368z" stroke-linecap="butt"/><path d="M240.05973,172.15833v8.05392l3.97958,3.97958" stroke-linecap="round"/></g></g></svg><!--rotationCenter:13.993685:13.993685-->
+<svg version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="27.98737" height="27.98737" viewBox="0,0,27.98737,27.98737">
+    <g transform="translate(-226.00631,-166.00631)">
+        <g fill="none" stroke="#720281" stroke-width="1.5" stroke-miterlimit="10">
+            <path d="M226.75632,180c0,-7.31429 5.9294,-13.24368 13.24369,-13.24368c7.31429,0 13.24369,5.9294 13.24369,13.24369c0,7.31429 -5.9294,13.24369 -13.24368,13.24369c-7.31429,0 -13.24368,-5.9294 -13.24368,-13.24368z" stroke-linecap="butt"/>
+            <path d="M240.05973,172.15833v8.05392l3.97958,3.97958" stroke-linecap="round"/>
+        </g>
+    </g>
+</svg><!--rotationCenter:13.993685:13.993685-->

@@ -7,13 +7,29 @@ import Image from "next/image";
 
 export type Service = Prisma.servicesGetPayload<{}>;
 
+import { Metadata } from "next";
+import { loadMetadata } from "./actions";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await loadMetadata();
+  return {
+    title: `Главная | ${meta?.data?.title || "Computer-Service-Site"}`,
+    description: meta?.data?.description || "Ремонт компьютеров и ноутбуков",
+  };
+}
+
 export default async function Home() {
   // const services: Service[] = await prisma.services.findMany({});
 
   return (
     <div className="main-page">
       <HeroSection />
-      <ServicesSection title="Наши услуги" /*services={services}*/ showCategories limit={3} />
+      <ServicesSection
+        title="Наши услуги"
+        showCategories
+        limit={3}
+        globalPadding={25}
+      />
       <FeaturesSection />
     </div>
   );

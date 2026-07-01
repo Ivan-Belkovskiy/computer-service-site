@@ -7,6 +7,59 @@ import path from "path";
 import { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 
+
+import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+const SESSION_EXPIRATION = 7 * 24 * 60 * 60 * 1000; 
+
+export type ActionState = {
+  success: boolean;
+  error?: string;
+} | null;
+
+export async function loginAdmin(prevState: ActionState, formData: FormData) {
+  const login = formData.get("login") as string;
+  const password = formData.get("password") as string;
+
+  if (!login || !password) {
+    return { success: false, error: "Заполните все поля" };
+  }
+
+  try {
+    const admin = await prisma.admin_users.findUnique({ where: { login } });
+    if (!admin) {
+      return { success: false, error: "Неверный логин или пароль" };
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) {
+      return { success: false, error: "Неверный логин или пароль" };
+    }
+
+    const cookieStore = await cookies();
+    cookieStore.set("admin_session", admin.login, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: SESSION_EXPIRATION,
+      path: "/",
+    });
+
+  } catch (error) {
+    console.error("Ошибка авторизации:", error);
+    return { success: false, error: "Что-то пошло не так" };
+  }
+
+  redirect("/control-panel");
+}
+
+export async function logoutAdmin() {
+  const cookieStore = await cookies();
+  cookieStore.delete("admin_session");
+  redirect("/control-panel/login");
+}
+
 export async function findOrAddClient(name: string, phone: string, email?: string) {
     if (!name || !phone) return { success: false, error: "Имя и телефон обязательны" };
 
@@ -60,7 +113,7 @@ export async function createOrder(
                 client_id: clientResult.data.id,
                 description,
                 address,
-                status: 'created',
+                status: 'CREATED',
             },
         });
 
@@ -146,4 +199,36 @@ export async function loadMetadata() {
     } catch (error) {
         return { success: false, error, data: placeholder };
     }
+}
+
+export async function getSiteSettings() {
+  try {
+    const settingsArray = await prisma.site_settings.findMany();
+    
+    const settingsObject = settingsArray.reduce((acc, item) => {
+      acc[item.key] = item.value;
+      return acc;
+    }, {} as Record<string, string>);
+
+    return { success: true, data: settingsObject };
+  } catch (error) {
+    console.error("Ошибка при получении настроек сайта:", error);
+    return { success: false, error: "Не удалось загрузить настройки" };
+  }
+}
+
+export async function updateSiteSetting(key: string, value: string) {
+  try {
+    await prisma.site_settings.upsert({
+      where: { key },
+      update: { value },
+      create: { key, value },
+    });
+    
+    revalidatePath("/", "layout"); 
+    return { success: true };
+  } catch (error) {
+    console.error(`Ошибка при обновлении настройки ${key}:`, error);
+    return { success: false, error: "Не удалось сохранить настройку" };
+  }
 }

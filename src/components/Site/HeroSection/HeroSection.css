@@ -10,6 +10,14 @@
     /* background-color: #0077ff; */
 }
 
+.hero-section__overlay {
+    position: absolute;
+    inset: 0;
+    /* background: #00000098; */
+
+    background: #00000070;
+}
+
 .hero-section__content {
     width: 100%;
     z-index: 2;

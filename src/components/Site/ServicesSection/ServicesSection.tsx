@@ -12,13 +12,15 @@ interface ServicesSectionProps {
     limit?: number;
     showCategories?: boolean;
     deviceFilter?: DeviceType;
+    globalPadding?: number;
 }
 
 export default async function ServicesSection({
     title = "Наши услуги",
     limit,
     showCategories = false,
-    deviceFilter
+    deviceFilter,
+    globalPadding
 }: ServicesSectionProps) {
 
     const services = await prisma.services.findMany({
@@ -63,7 +65,7 @@ export default async function ServicesSection({
     };
 
     return (
-        <section className="services-section">
+        <section className="services-section" style={{ padding: (globalPadding) ? `${globalPadding}px 0` : '' }}>
             <h2 className="services-section__title">{title}</h2>
 
             <div className="services-section__content">
