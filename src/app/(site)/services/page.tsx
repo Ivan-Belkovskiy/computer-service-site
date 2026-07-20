@@ -1,6 +1,6 @@
 import ServicesSection from "@/components/Site/ServicesSection/ServicesSection";
 import { Metadata } from "next";
-import { loadMetadata } from "../actions";
+import { loadMetadata } from "../../actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const meta = await loadMetadata();

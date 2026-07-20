@@ -5,9 +5,11 @@ import './HeroSection.css';
 import NewOrderModal from '@/components/UI/NewOrderModal/NewOrderModal';
 import { useState } from 'react';
 
-export default function HeroSection() {
+export default function HeroSection({ initialSettings }: { initialSettings: Record<string, string> }) {
 
     const [isModalOpened, setModalOpened] = useState<boolean>(false);
+
+    const phoneLink = `tel:${initialSettings?.["contact_phone"]?.replace(/[^+\d]/g, "") || "+375291234567"}`;
 
     return (
         <section className='hero-section'>
@@ -26,8 +28,10 @@ export default function HeroSection() {
                 <h1 className='hero-section__title'>Профессиональное обслуживание и ремонт компьютеров в Минске</h1>
                 <p className="hero-section__description">Бесплатная диагностика при последующем ремонте. Гарантия от 3 месяцев</p>
                 <div className="hero-section__buttons">
-                    <button className="hero-section__button primary-btn" onClick={() => setModalOpened(true)}>Оставить заявку</button>
-                    <a className="hero-section__button secondary-btn" href='tel:+375291234567'>Позвонить!</a>
+                    <button className="hero-section__button primary-btn" onClick={() => {
+                        setModalOpened(true);
+                        }}>Оставить заявку</button>
+                    <a className="hero-section__button secondary-btn" href={phoneLink}>Позвонить!</a>
                 </div>
             </div>
 

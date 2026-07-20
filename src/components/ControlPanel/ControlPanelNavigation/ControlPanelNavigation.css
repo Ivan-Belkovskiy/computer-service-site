@@ -35,14 +35,14 @@
 }
 
 .control-panel-navigation__right {
-    width: 50%;
+    width: 30%;
     display: flex;
     justify-content: end;
     align-items: center;
 }
 
 .control-panel-navigation__button {
-    padding: 9px 16px;
+    padding: 9px 12px;
     transition: all 0.45s ease 0s;
     height: 100%;
     display: flex;

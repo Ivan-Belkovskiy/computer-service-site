@@ -28,7 +28,7 @@ export default async function ServicesSection({
             device_type: deviceFilter,
         },
         orderBy: [
-            { displayOrder: 'desc' }
+            { displayOrder: 'asc' }
         ]
     });
 
@@ -54,7 +54,8 @@ export default async function ServicesSection({
                 <ul className="services-section__list">
                     {items.map(s => (
                         <li className="services-section__block" key={s.id}>
-                            <span className="services-section__name">{s.name}</span>
+                            {/* <span className="services-section__name">{s.name}</span> */}
+                            <Link href={`/services/${s.slug}`} className="services-section__name">{s.name}</Link>
 
                             <span className="services-section__price">{formatPrice(s)}</span>
                         </li>

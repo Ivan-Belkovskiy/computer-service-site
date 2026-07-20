@@ -1,22 +1,45 @@
 'use client';
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import SiteFooter from "./Site/SiteFooter/SiteFooter";
 import SiteNavigation from "./UI/SiteNavigation/SiteNavigation";
-import { usePathname } from "next/navigation";
-import ControlPanelNavigation from "./ControlPanel/ControlPanelNavigation/ControlPanelNavigation";
 
 export default function AppLayout({ children, siteSettings }: { children?: ReactNode, siteSettings?: Record<string, string> }) {
 
-  const url = usePathname();
+  // useEffect(() => {
+    
+  //   const keyDownHandler = (e: KeyboardEvent) => {
+  //     if (e.key === 'F12') {
+  //       // alert('Вход в инструменты разработчика запрещен!!!')
+  //       e.preventDefault();
+  //       return false;
+  //       }
+  //   }
 
-  const isControlPanel = url.startsWith('/control-panel');
+  //   const contextMenuHandler = (e: Event) => {
+  //     // alert('Контекстное меню запрещено!');
+  //     e.preventDefault();
+  //     return false;
+  //   }
+
+  //   if (typeof window !== 'undefined') {
+  //     window.addEventListener('contextmenu', contextMenuHandler);
+  //     window.addEventListener('keydown', keyDownHandler);
+  //     }
+
+  //   return () => {
+  //     if (typeof window !== 'undefined') {
+  //     window.removeEventListener('contextmenu', contextMenuHandler);
+  //     window.removeEventListener('keydown', keyDownHandler);
+  //     }
+  //   }
+  // }, []);
 
   return (
     <>
-      {isControlPanel ? <ControlPanelNavigation /> : <SiteNavigation settings={siteSettings} />}
+      <SiteNavigation settings={siteSettings} />
       <main>{children}</main>
-      {!isControlPanel && <SiteFooter settings={siteSettings} />}
+      <SiteFooter settings={siteSettings} />
     </>
   )
 }

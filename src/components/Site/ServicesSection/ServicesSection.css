@@ -141,4 +141,12 @@
         width: 45%;
     }
 
+    .services-section__name {
+        transition: all 0.3s ease 0s;
+    }
+
+    .services-section__name:hover {
+        color: #ff55d4;
+    }
+
 }

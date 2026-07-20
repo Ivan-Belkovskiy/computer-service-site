@@ -1,16 +1,15 @@
 'use server';
 
 import { prisma } from "@/lib/prisma";
-import { Service } from "./page";
+import { Service } from "./(site)/page";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { Metadata } from "next";
 import { revalidatePath } from "next/cache";
-
-
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { OrderStatus } from "@prisma/client";
 
 const SESSION_EXPIRATION = 7 * 24 * 60 * 60 * 1000; 
 
@@ -51,13 +50,13 @@ export async function loginAdmin(prevState: ActionState, formData: FormData) {
     return { success: false, error: "Что-то пошло не так" };
   }
 
-  redirect("/control-panel");
+  redirect("/controlpanel");
 }
 
 export async function logoutAdmin() {
   const cookieStore = await cookies();
   cookieStore.delete("admin_session");
-  redirect("/control-panel/login");
+  redirect("/controlpanel/login");
 }
 
 export async function findOrAddClient(name: string, phone: string, email?: string) {
@@ -149,6 +148,7 @@ export async function updateServices(d: Service[]) {
                     name: s.name,
                     price: s.price,
                     unit: s.unit,
+                    slug: s.slug,
                     isStartingPrice: s.isStartingPrice,
                     category: s.category,
                     description: s.description,
@@ -186,16 +186,25 @@ export async function loadMetadata() {
         description: 'No Description',
     };
     try {
-        const filepath = path.join(process.cwd(), 'metadata.json');
-        if (!existsSync(filepath)) return { success: true, data: placeholder };
+        // return { success: true, data: placeholder };
+        const d = await getSiteSettings();
+        const data = d.data;
+        if (!data?.site_title) return { success: true, data: placeholder };
 
-        const data = readFileSync(filepath, {
-            encoding: 'utf-8'
-        });
+        
 
-        if (typeof data !== 'string') return;
+        // if ()
 
-        return { success: true, data: JSON.parse(data) };
+        // const data = readFileSync(filepath, {
+        //     encoding: 'utf-8'
+        // });
+
+        // if (typeof data !== 'string') return;
+
+        return { success: true, data: {
+            title: data.site_title,
+            description: data.site_description
+        } };
     } catch (error) {
         return { success: false, error, data: placeholder };
     }
@@ -231,4 +240,33 @@ export async function updateSiteSetting(key: string, value: string) {
     console.error(`Ошибка при обновлении настройки ${key}:`, error);
     return { success: false, error: "Не удалось сохранить настройку" };
   }
+}
+
+export async function updateOrder(formData: FormData) {
+    const orderId = parseInt(formData.get("orderId") as string, 10);
+    const status = formData.get("status") as OrderStatus;
+    const masterIdRaw = formData.get("masterId") as string;
+    const totalPriceRaw = formData.get("totalPrice") as string;
+
+    const master_id = masterIdRaw ? parseInt(masterIdRaw, 10) : null;
+    const total_price = totalPriceRaw ? parseInt(totalPriceRaw, 10) : null;
+
+    try {
+        await prisma.orders.update({
+            where: { id: orderId },
+            data: {
+                status,
+                master_id,
+                total_price,
+            },
+        });
+
+        revalidatePath("/controlpanel/orders");
+        revalidatePath(`/controlpanel/orders/${orderId}`);
+
+        // return { success: true };
+    } catch (error) {
+        console.error("Ошибка обновления заявки:", error);
+        // return { success: false, error: "Не удалось сохранить изменения." };
+    }
 }

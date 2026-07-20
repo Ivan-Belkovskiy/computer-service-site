@@ -36,7 +36,7 @@ export default function ControlPanelLoginPage() {
 
                 {state?.error && (
                     <div className="control-panel-login-form__error">
-                        {/*⚠️ */} {state.error}
+                        {state.error}
                     </div>
                 )}
 

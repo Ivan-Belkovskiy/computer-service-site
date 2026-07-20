@@ -19,7 +19,7 @@ async function main() {
     },
   });
 
-  console.log(`✅ Администратор "${adminLogin}" успешно создан/проверен.`);
+  console.log(`✅ Пользователь "${adminLogin}" успешно создан/проверен.`);
 }
 
 main()

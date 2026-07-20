@@ -14,7 +14,7 @@ import { loadMetadata } from "../../actions";
 export default function ControlPanelPage() {
     return (
         <div className="control-panel">
-            <MainInfoEditor />
+            {/* <MainInfoEditor /> */}
             {/* <ControlPanel /> */}
         </div>
     )

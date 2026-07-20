@@ -10,6 +10,7 @@ export default defineConfig({
     seed: 'npx tsx ./prisma/seed.ts',
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: "mysql://root:Dragon851171!@localhost:3306/computer_service_site_db",
+    // url: process.env["DATABASE_URL"],
   },
 });

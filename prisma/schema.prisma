@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
 }
 
 model categories {
@@ -46,6 +46,7 @@ model services {
   name            String?     @db.VarChar(90)
   price           Int
   unit            PricingUnit @default(FIXED)
+  slug            String      @unique @db.VarChar(80)
   isStartingPrice Boolean     @default(false)
   category        Int?
   description     String?
@@ -69,7 +70,7 @@ enum DeviceType {
 }
 
 enum OrderStatus {
-  CREATED    
+  CREATED  
   IN_PROGRESS
   COMPLETED  
   CANCELLED  
@@ -78,13 +79,11 @@ enum OrderStatus {
 model orders {
   id          Int          @id @default(autoincrement())
   client_id   Int?
-  
   status      OrderStatus? @default(CREATED)
-  
   master_id   Int?
   partner_id  Int?
   total_price Int?
-  created_at  DateTime?    @default(now()) @db.Timestamptz(6)
+  created_at  DateTime?    @default(now())
   description String?
   address     String?
 
@@ -108,4 +107,40 @@ model admin_users {
   login     String   @unique
   password  String  
   createdAt DateTime @default(now())
+}
+
+model site_pages {
+  id        Int             @id @default(autoincrement())
+  slug      String          @unique @db.VarChar(50) 
+  name      String          @db.VarChar(100)        
+  sections  page_sections[]
+}
+
+model page_sections {
+  id                Int              @id @default(autoincrement())
+  page_id           Int
+  type              String           @db.VarChar(50) 
+  name              String           @db.VarChar(100) 
+  display_order     Int              @default(0)
+  is_active         Boolean          @default(true)
+  
+  props             Json?
+  content           Json?
+
+  custom_section_id Int?
+  custom_sections   custom_sections? @relation(fields: [custom_section_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  page              site_pages       @relation(fields: [page_id], references: [id], onDelete: Cascade)
+
+  @@index([page_id], map: "page_sections_page_fkey")
+  @@index([custom_section_id], map: "page_sections_custom_section_fkey")
+}
+
+model custom_sections {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(100) 
+  props         Json?
+  content       Json?            
+  
+  page_sections page_sections[]
 }

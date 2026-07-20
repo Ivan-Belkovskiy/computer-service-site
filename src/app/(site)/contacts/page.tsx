@@ -1,6 +1,6 @@
 import ContactsSection from "@/components/Site/ContactsSection/ContactsSection";
 import { Metadata } from "next";
-import { getSiteSettings } from "../actions";
+import { getSiteSettings } from "../../actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const response = await getSiteSettings();

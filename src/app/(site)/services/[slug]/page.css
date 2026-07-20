@@ -1,0 +1,86 @@
+.service-detail-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: sans-serif
+}
+
+.service-detail-page__main {
+    margin-top: 24px;
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1)
+}
+
+.service-detail-page__label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    border-radius: 4px
+}
+
+.service-detail-page__title {
+    font-size: 32px;
+    margin-top: 16px;
+    color: #720281
+}
+
+.service-detail-page__price {
+    margin: 24px 0;
+    font-size: 24px;
+    color: #720281
+}
+
+
+.service-detail-page__block {
+    color: #374151;
+    line-height: 1.6;
+    font-size: 16px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 20px
+}
+
+.service-detail-page__block h3 {
+    color: #111827;
+    margin-bottom: 12px
+}
+
+.service-detail-page__description {
+    white-space: pre-wrap
+}
+
+.service-detail-page__actions {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px
+}
+
+.service-detail-page__actions h4 {
+    margin: 0;
+    color: #720281
+}
+
+.service-detail-page__actions p {
+    margin: 4px 0 0 0;
+    color: #374151;
+    font-size: 14px
+}
+
+.service-detail-page__button {
+    background-color: #720281;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: auto
+}

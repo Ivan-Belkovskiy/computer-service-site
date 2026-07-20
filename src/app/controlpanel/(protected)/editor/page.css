@@ -1,0 +1,23 @@
+.editor-page {
+    width: 100%;
+    padding: 24px;
+    background-color: #f9fafb;
+    flex-grow: 1;
+}
+
+.editor-page__header {
+    margin-bottom: 24px;
+}
+
+.editor-page__header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #720281;
+}
+
+.editor-page__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

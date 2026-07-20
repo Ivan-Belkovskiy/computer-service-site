@@ -1,0 +1,8 @@
+.new-service-page {
+    /* padding: 24px; */
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}

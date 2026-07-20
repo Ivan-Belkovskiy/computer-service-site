@@ -21,17 +21,32 @@ export default function ControlPanelNavigation() {
                 </ul>
                 <ul className="control-panel-navigation__middle">
                     <li className="control-panel-navigation__button link">
-                        <Link href="/control-panel/">Основная информация</Link>
+                        <Link href="/controlpanel/clients">Клиенты</Link>
                     </li>
                     <li className="control-panel-navigation__button link">
-                        <Link href="/control-panel/data">Данные</Link>
+                        <Link href="/controlpanel/orders">Заявки</Link>
                     </li>
+                    <li className="control-panel-navigation__button link">
+                        <Link href="/controlpanel/services">Услуги и Цены</Link>
+                    </li>
+                    <li className="control-panel-navigation__button link">
+                        <Link href="/controlpanel/editor">Редактор сайта</Link>
+                    </li>
+                    <li className="control-panel-navigation__button link">
+                        <Link href="/controlpanel/settings">Настройки сайта</Link>
+                    </li>
+                    {/* <li className="control-panel-navigation__button link">
+                        <Link href="/controlpanel/">Основная информация</Link>
+                    </li>
+                    <li className="control-panel-navigation__button link">
+                        <Link href="/controlpanel/data">Данные</Link>
+                    </li> */}
                 </ul>
-                <ul className="control-panel-navigation__right">
-                    <button className="control-panel-navigation__button return-to-site-btn">
-                        <Link href="/">↩ Перейти на сайт</Link>
-                    </button>
-                </ul>
+                <li className="control-panel-navigation__right">
+                    <Link href="/" target="_blank" className="control-panel-navigation__button return-to-site-btn">
+                        ↩ Перейти на сайт
+                    </Link>
+                </li>
             </nav>
         </div>
     )
