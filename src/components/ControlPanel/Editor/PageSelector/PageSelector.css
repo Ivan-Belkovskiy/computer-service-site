@@ -104,3 +104,22 @@
     text-decoration-color: transparent;
     border-right: 3px solid #720281;
 }
+
+
+.editor-page-selector__button {
+    width: 100%;
+    background-color: #fff;
+    color: #720281;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-top: 3px solid #720281;
+    transition: all 0.3s ease 0s;
+}
+
+.editor-page-selector__button:hover {
+    cursor: pointer;
+    background-color: #720281;
+    color: #fff;
+}

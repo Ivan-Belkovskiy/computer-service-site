@@ -6,15 +6,15 @@ import "./page.css";
 import ServiceOrderWrapper from "@/components/UI/ServiceOrderWrapper/ServiceOrderWrapper";
 
 interface ServicePageProps {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ serviceSlug: string }>;
 }
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
     const resolvedParams = await params;
-    const serviceSlug = resolvedParams.slug;
+    const slug = resolvedParams.serviceSlug;
 
     const service = await prisma.services.findUnique({
-        where: { slug: serviceSlug }
+        where: { slug: slug }
     });
 
     if (!service) {
@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 export default async function ServiceDetailPage({ params }: ServicePageProps) {
     const resolvedParams = await params;
-    const serviceSlug = resolvedParams.slug;
+    const slug = resolvedParams.serviceSlug;
 
     const service = await prisma.services.findUnique({
-        where: { slug: serviceSlug }
+        where: { slug: slug }
     });
 
     if (!service) {

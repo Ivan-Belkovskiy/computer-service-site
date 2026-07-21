@@ -110,9 +110,11 @@ model admin_users {
 }
 
 model site_pages {
-  id        Int             @id @default(autoincrement())
-  slug      String          @unique @db.VarChar(50) 
-  name      String          @db.VarChar(100)        
+  id                Int             @id @default(autoincrement())
+  slug              String          @unique @db.VarChar(50) 
+  name              String          @db.VarChar(100)  
+  description       String?          @db.VarChar(250)     
+  displayInNavigation  Boolean         @default(true) 
   sections  page_sections[]
 }
 

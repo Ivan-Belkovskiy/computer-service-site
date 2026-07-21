@@ -8,13 +8,26 @@ import { useState } from "react";
 import ExpandableSidePanel from "../ExpandableSidePanel/ExpandableSidePanel";
 import ContactsBlock from "../ContactsBlock/ContactsBlock";
 
-export default function SiteNavigation({ settings, menuOnly }: { settings?: Record<string, string>, menuOnly?: boolean; }) {
+export default function SiteNavigation({ settings, menuOnly, pageLinks }: {
+    settings?: Record<string, string>;
+    menuOnly?: boolean;
+    pageLinks: {
+        id: number,
+        name: string,
+        slug: string,
+    }[];
+}) {
 
     const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 
     const renderMenu = (inFooter?: boolean) => (
         <ul className={(inFooter) ? `site-navigation__menu` : `site-navigation__middle --desktop-only`}>
-            <li className="site-navigation__button link">
+            {pageLinks?.map(l => (
+                <li className="site-navigation__button link" key={l.id}>
+                    <Link href={(l.slug !== '/') ? `/${l.slug}` : ''} >{l.name}</Link>
+                </li>
+            ))}
+            {/* <li className="site-navigation__button link">
                 <Link href="/">Главная</Link>
             </li>
             <li className="site-navigation__button link">
@@ -25,11 +38,35 @@ export default function SiteNavigation({ settings, menuOnly }: { settings?: Reco
             </li>
             <li className="site-navigation__button link">
                 <Link href="/contacts">Контакты</Link>
-            </li>
+            </li> */}
         </ul>
     )
 
     if (menuOnly) return renderMenu(true);
+    // {}
+    // const mobilePanelLinks = [
+    //     {
+    //         content: 'Главная',
+    //         url: '/'
+    //     },
+    //     {
+    //         content: 'Услуги',
+    //         url: '/services'
+    //     },
+    //     {
+    //         content: 'О нас',
+    //         url: '/about'
+    //     },
+    //     {
+    //         content: 'Контакты',
+    //         url: '/contacts'
+    //     },
+    // ];
+
+    const mobilePanelLinks = pageLinks?.map(l => ({
+        content: l.name,
+        url: (l.slug !== '/') ? `/${l.slug}` : l.slug
+    }));
 
     return (
         <header className="site-navigation__container">
@@ -39,7 +76,7 @@ export default function SiteNavigation({ settings, menuOnly }: { settings?: Reco
                         <Image
                             width={144}
                             height={36}
-                            src="/site-temp-logo.svg"
+                            src={(settings?.['site_logo']) || "/site-temp-logo.svg"}
                             alt="Site Logo"
                         />
                     </li>
@@ -98,24 +135,7 @@ export default function SiteNavigation({ settings, menuOnly }: { settings?: Reco
                     </li>
                 </ul>
             </nav>
-            <ExpandableSidePanel isExpanded={isMobileMenuOpened} setExpanded={setMobileMenuOpened} mobileOnly elements={[
-                {
-                    content: 'Главная',
-                    url: '/'
-                },
-                {
-                    content: 'Услуги',
-                    url: '/services'
-                },
-                {
-                    content: 'О нас',
-                    url: '/about'
-                },
-                {
-                    content: 'Контакты',
-                    url: '/contacts'
-                },
-            ]} />
+            <ExpandableSidePanel isExpanded={isMobileMenuOpened} setExpanded={setMobileMenuOpened} mobileOnly elements={mobilePanelLinks} />
         </header>
     )
 }

@@ -38,9 +38,9 @@ export default function SectionSelector({
             updatedProps.globalPadding = Number(formData.get('globalPadding'));
         }
         
-        if (type === 'HERO') {
-            updatedProps.title = formData.get('title') as string;
-        }
+        // if (type === 'HERO') {
+        //     updatedProps.title = formData.get('title') as string;
+        // }
 
         const result = await updateSectionProps(sectionId, updatedProps);
         
@@ -148,7 +148,7 @@ export default function SectionSelector({
                                                 </div>
                                             )}
 
-                                            {s.type === 'HERO' && (
+                                            {/* {s.type === 'HERO' && (
                                                 <div className="section-editor-form__column">
                                                     <div className="section-editor-form__block">
                                                         <span>Главный текст (Title):</span>
@@ -160,15 +160,15 @@ export default function SectionSelector({
                                                         />
                                                     </div>
                                                 </div>
-                                            )}
+                                            )} */}
 
-                                            {s.type !== 'SERVICES' && s.type !== 'HERO' && (
+                                            {s.type !== 'SERVICES' /*&& s.type !== 'HERO'*/ && (
                                                 <p className="no-props-info">Для этой секции пока нет настраиваемых пропсов.</p>
                                             )}
 
-                                            <button type="submit" disabled={isSaving} className="section-save-btn">
+                                            {(s.type === 'SERVICES') && <button type="submit" disabled={isSaving} className="section-save-btn">
                                                 {isSaving ? "Сохранение..." : "Сохранить изменения"}
-                                            </button>
+                                            </button>}
                                         </form>
                                     </div>
                                 )}

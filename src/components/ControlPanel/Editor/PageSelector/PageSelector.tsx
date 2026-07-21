@@ -3,10 +3,12 @@
 import { Page } from "@/app/controlpanel/(protected)/editor/page";
 import "./PageSelector.css";
 
-export default function PageSelector({ pages, onSelect, activePage }: {
+export default function PageSelector({ pages, onSelect, onCreate, onDelete, activePage }: {
     pages: Page[];
     activePage: number | null;
     onSelect: (pageId: number) => void;
+    onCreate: () => void;
+    onDelete: (pageId: number) => void;
 }) {
     return (
         <div className="editor-page-selector">
@@ -24,6 +26,7 @@ export default function PageSelector({ pages, onSelect, activePage }: {
                     </div>
                 ))}
             </div>
+            <button className="editor-page-selector__button" onClick={() => onCreate()}>[+] Создать страницу</button>
         </div>
     )
 }

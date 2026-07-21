@@ -1,17 +1,20 @@
 'use server';
 
 import { prisma } from "@/lib/prisma";
-import { Service } from "./(site)/page";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+// import { Service } from "./(site)/page";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
+import { deleteFile } from "./actions/upload";
 
 const SESSION_EXPIRATION = 7 * 24 * 60 * 60 * 1000; 
+
+export type Service = Prisma.servicesGetPayload<{}>;
 
 export type ActionState = {
   success: boolean;
@@ -228,6 +231,18 @@ export async function getSiteSettings() {
 
 export async function updateSiteSetting(key: string, value: string) {
   try {
+    const currentSetting = await prisma.site_settings.findUnique({
+      where: { key },
+    });
+
+    if (
+      currentSetting &&
+      currentSetting.value !== value &&
+      currentSetting.value.startsWith('/uploads/')
+    ) {
+      await deleteFile(currentSetting.value);
+    }
+
     await prisma.site_settings.upsert({
       where: { key },
       update: { value },
@@ -270,3 +285,5 @@ export async function updateOrder(formData: FormData) {
         // return { success: false, error: "Не удалось сохранить изменения." };
     }
 }
+
+

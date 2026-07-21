@@ -4,10 +4,18 @@ import { ReactNode, useEffect } from "react";
 import SiteFooter from "./Site/SiteFooter/SiteFooter";
 import SiteNavigation from "./UI/SiteNavigation/SiteNavigation";
 
-export default function AppLayout({ children, siteSettings }: { children?: ReactNode, siteSettings?: Record<string, string> }) {
+export default function AppLayout({ children, siteSettings, pageLinks }: {
+  children?: ReactNode;
+  siteSettings?: Record<string, string>;
+  pageLinks: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
+}) {
 
   // useEffect(() => {
-    
+
   //   const keyDownHandler = (e: KeyboardEvent) => {
   //     if (e.key === 'F12') {
   //       // alert('Вход в инструменты разработчика запрещен!!!')
@@ -37,9 +45,9 @@ export default function AppLayout({ children, siteSettings }: { children?: React
 
   return (
     <>
-      <SiteNavigation settings={siteSettings} />
+      <SiteNavigation settings={siteSettings} pageLinks={pageLinks} />
       <main>{children}</main>
-      <SiteFooter settings={siteSettings} />
+      <SiteFooter settings={siteSettings} pageLinks={pageLinks} />
     </>
   )
 }

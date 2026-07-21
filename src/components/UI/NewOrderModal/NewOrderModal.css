@@ -97,7 +97,7 @@
     /* background-color: #000000; */
 }
 
-.new-order-modal__input.validation-error {
+.validation-error {
     outline: 2px solid #ff0000;
 }
 
@@ -106,10 +106,39 @@
     font-size: 14px;
 }
 
+.new-order-modal__agreement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    color: #a100a7;
+}
+
+.new-order-modal__agreement a {
+    color: #0019a7;
+    font-weight: bold;
+    transition: all 0.3s ease 0s;
+    margin: 0 1px;
+    text-decoration: underline;
+}
+
+.new-order-modal__agreement a:hover {
+    color: #0020d3;
+    text-decoration: none;
+}
+
+.new-order-modal__checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
 @media (min-width: 1024px) {
 
     .new-order-modal {
-        width: 40%;
+        width: 45%;
         min-height: 25%;
     }
 

@@ -7,7 +7,13 @@ import SiteNavigation from "@/components/UI/SiteNavigation/SiteNavigation";
 import { useState } from "react";
 import NewOrderModal from "@/components/UI/NewOrderModal/NewOrderModal";
 
-export default function SiteFooter({ settings }: { settings?: Record<string, string> }) {
+export default function SiteFooter({ settings, pageLinks }: {
+    settings?: Record<string, string>; pageLinks: {
+        id: number;
+        name: string;
+        slug: string;
+    }[]
+}) {
 
     const [isModalOpened, setModalOpened] = useState(false);
 
@@ -18,7 +24,7 @@ export default function SiteFooter({ settings }: { settings?: Record<string, str
                     <Image
                         width={144}
                         height={36}
-                        src="/site-temp-logo.svg"
+                        src={(settings?.['site_logo']) || "/site-temp-logo.svg"}
                         alt="Site Logo"
                         className="site-footer__logo"
                     />
@@ -26,7 +32,7 @@ export default function SiteFooter({ settings }: { settings?: Record<string, str
                 </div>
                 <div className="site-footer__column">
                     <span className="site-footer__heading">Навигация</span>
-                    <SiteNavigation menuOnly />
+                    <SiteNavigation menuOnly pageLinks={pageLinks} />
                 </div>
                 <div className="site-footer__column">
                     <span className="site-footer__heading">Контактная информация</span>

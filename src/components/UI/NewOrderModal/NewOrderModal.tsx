@@ -8,13 +8,17 @@ import { createOrder } from "@/app/actions";
 interface ValidationErrors {
     name?: boolean;
     phone?: boolean;
+    agreed?: boolean;
 }
 
-export default function NewOrderModal({ isOpened, onClose, onSubmit }: {
-    isOpened?: boolean;
-    onSubmit?: () => void;
-    onClose?: () => void;
-}) {
+export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl = "/privacy",
+    offerUrl = "/offer" }: {
+        isOpened?: boolean;
+        onSubmit?: () => void;
+        onClose?: () => void;
+        privacyUrl?: string;
+        offerUrl?: string;
+    }) {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [submitResult, setSubmitResult] = useState<{
         success: boolean;
@@ -28,22 +32,25 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit }: {
     const [address, setAddress] = useState<string>("");
     const [description, setDescription] = useState<string>("");
 
+    const [isAgreed, setIsAgreed] = useState<boolean>(true);
+
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
-    const validateData = (name: string, phone: string) => {
+    const validateData = (name: string, phone: string, agreed: boolean) => {
         const isNameValid = name.trim().length > 2;
-        const isPhoneValid = phone.length >= 17; 
+        const isPhoneValid = phone.length >= 17;
 
         setValidationErrors({
             name: !isNameValid,
-            phone: !isPhoneValid
+            phone: !isPhoneValid,
+            agreed: !agreed
         });
 
-        return isNameValid && isPhoneValid;
+        return isNameValid && isPhoneValid && agreed;
     };
 
     const handleSubmit = async () => {
-        if (validateData(name, phone)) {
+        if (validateData(name, phone, isAgreed)) {
             setLoading(true);
             const res = await createOrder(name, phone, description, email, address);
             setLoading(false);
@@ -66,6 +73,7 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit }: {
             setEmail("");
             setAddress("");
             setDescription("");
+            setIsAgreed(false);
             setValidationErrors({});
         }
     }, [isOpened]);
@@ -77,7 +85,7 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit }: {
                 <h1 className="new-order-modal__title">
                     {submitResult ? (submitResult.success ? 'Заявка принята!' : 'Произошла ошибка') : "Оставить заявку"}
                 </h1>
-                
+
                 {submitResult ? (
                     <>
                         <p className="new-order-modal__messagebox">
@@ -131,6 +139,40 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit }: {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         ></textarea>
+
+                        <div className={`new-order-modal__agreement ${validationErrors.agreed ? 'validation-error' : ''}`}>
+                            {/* <label className="new-order-modal__checkbox-label"> */}
+                            <input
+                                className="new-order-modal__checkbox"
+                                type="checkbox"
+                                checked={isAgreed}
+                                onChange={(e) => {
+                                    setValidationErrors({ ...validationErrors, agreed: false });
+                                    setIsAgreed(e.target.checked);
+                                }}
+                            />
+                            <span>
+                                Я согласен с{" "}
+                                {privacyUrl ? (
+                                    <a href={privacyUrl} target="_blank" rel="noopener noreferrer">
+                                        политикой конфиденциальности
+                                    </a>
+                                ) : (
+                                    "политикой конфиденциальности"
+                                )}
+                                {" и "}
+                                {offerUrl ? (
+                                    <a href={offerUrl} target="_blank" rel="noopener noreferrer">
+                                        публичной офертой
+                                    </a>
+                                ) : (
+                                    "публичной офертой"
+                                )}
+                                *
+                            </span>
+                            {/* </label> */}
+                        </div>
+                        {renderError('agreed', 'Для отправки формы необходимо согласие')}
 
                         <button
                             className="new-order-modal__button submit-button"

@@ -4,7 +4,7 @@ import Image from "next/image";
 import "./ControlPanelNavigation.css";
 import Link from "next/link";
 
-export default function ControlPanelNavigation() {
+export default function ControlPanelNavigation({ settings }: { settings?: Record<string, string> }) {
     return (
         <div className="control-panel-navigation__container">
             <nav className="control-panel-navigation">
@@ -13,7 +13,7 @@ export default function ControlPanelNavigation() {
                         <Image
                             width={144}
                             height={36}
-                            src="/site-temp-logo.svg"
+                            src={(settings?.['site_logo']) || "/site-temp-logo.svg"}
                             alt="Site Logo"
                         />
                     </li>

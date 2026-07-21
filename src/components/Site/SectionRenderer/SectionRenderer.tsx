@@ -19,7 +19,8 @@ export default function SectionRenderer({ sections, settings }: SectionRendererP
     return (
       <div className="main-page">
         <p style={{ padding: 40, textAlign: 'center' }}>
-          Страница находится в режиме наполнения секций.
+          Данная страница находится на этапе заполнения контентом! Она будет доступна в ближайшее время!
+          {/* Страница находится в режиме наполнения секций. */}
         </p>
       </div>
     );
