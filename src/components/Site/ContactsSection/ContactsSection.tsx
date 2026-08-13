@@ -100,7 +100,7 @@ export default function ContactsSection({ initialSettings }: ContactsSectionProp
             <NewOrderModal
                 isOpened={isModalOpened}
                 onClose={() => setModalOpened(false)}
-                onSubmit={() => setModalOpened(false)}
+                // onSubmit={() => setModalOpened(false)}
             />
         </section>
     );

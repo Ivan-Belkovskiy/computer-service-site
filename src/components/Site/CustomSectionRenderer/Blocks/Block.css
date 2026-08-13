@@ -1,0 +1,255 @@
+.custom-heading {
+    color: #4e0158;
+    padding: 10px 0;
+}
+
+.custom-text-block {
+    margin: 20px 20px;
+    padding: 10px 10px;
+    color: #4e0158;
+}
+
+.custom-buttons-block {
+    width: 100%;
+    /* height: 30px; */
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.custom-buttons-block__button {
+    position: relative;
+    background-color: #720281;
+    color: #fff;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+.block-wrapper:not(.block-wrapper--editable) .custom-buttons-block__button {
+    transition: all 0.3s ease 0s;
+    outline: 2px solid transparent;
+}
+
+.block-wrapper:not(.block-wrapper--editable) .custom-buttons-block__button:hover {
+    outline-color: #720281;
+    background-color: #fff;
+    color: #720281;
+    cursor: pointer;
+}
+
+.custom-buttons-block__control-buttons {
+    position: absolute;
+    z-index: 20;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    display: flex;
+}
+
+.custom-buttons-block__delete-button {
+    /* content: "⨉";
+    position: absolute;
+    z-index: 20;
+    right: 0; */
+    opacity: 0;
+    /* pointer-events: none; */
+    pointer-events: all;
+    transition: all 0.25s ease 0s;
+    color: #ffffff;
+    border: 1px solid #ff0000;
+    outline: 1px solid #fff;
+    border-radius: 8px;
+    /* border-right: 1px solid #ff0000; */
+    padding: 3px 5px;
+    margin: 5px;
+}
+
+.custom-buttons-block__button:hover .custom-buttons-block__delete-button {
+    opacity: 1;
+    /* background-color: #fff; */
+    /* cursor: pointer; */
+}
+
+.custom-buttons-block__delete-button:hover {
+    background-color: #ff0000;
+    cursor: pointer;
+}
+
+.custom-buttons-block__edit-button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-buttons-block__edit-button {
+    /* content: "🔗"; */
+    /* position: absolute;
+    z-index: 20;
+    right: 0; */
+    opacity: 0;
+    /* pointer-events: none; */
+    pointer-events: all;
+    transition: all 0.25s ease 0s;
+    color: #ffffff;
+    border: 1px solid #0077ff;
+    outline: 1px solid #fff;
+    border-radius: 8px;
+    /* border-right: 1px solid #ff0000; */
+    padding: 3px 4px;
+    margin: 5px;
+}
+
+.custom-buttons-block__infobox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    /* top: 10px; */
+    right: 90%;
+    background-color: #0077ff;
+    outline: 1px solid #fff;
+    padding: 3px 5px;
+    transition: all 0.25s ease 0s;
+}
+
+.custom-buttons-block__button:hover .custom-buttons-block__edit-button {
+    opacity: 1;
+    /* background-color: #fff; */
+    /* cursor: pointer; */
+}
+
+.custom-buttons-block__edit-button-container:hover .custom-buttons-block__edit-button,
+.custom-buttons-block__edit-button-container.active-input .custom-buttons-block__edit-button {
+    opacity: 1;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #0077ff;
+}
+
+.custom-buttons-block__edit-button-container:hover .custom-buttons-block__infobox,
+.custom-buttons-block__edit-button-container.active-input .custom-buttons-block__infobox {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.custom-buttons-block__edit-button:hover {
+    background-color: #0077ff;
+    cursor: pointer;
+}
+
+/* .custom-buttons-block__edit-button:not(:) */
+
+.custom-buttons-block__button.create-btn {
+    width: 30px;
+    flex-grow: 0;
+    outline: 2px dashed #3b82f6;
+    background-color: #fff;
+    font-size: 18px;
+    color: #3b82f6;
+    transition: all 0.3s ease 0s;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    padding: 4px 0;
+    display: flex;
+    justify-content: start;
+    padding-left: 10px;
+}
+
+.custom-buttons-block__button.create-btn::after {
+    content: " Добавить кнопку";
+    display: inline-block;
+    position: relative;
+    margin-left: 10px;
+}
+
+.custom-buttons-block__button.create-btn.short-text::after {
+    content: " Добавить";
+}
+
+.custom-buttons-block__button.create-btn.no-text::after {
+    display: none;
+}
+
+.custom-buttons-block__button.create-btn:hover {
+    width: 180px;
+    outline-style: solid;
+    cursor: pointer;
+    background-color: #3b82f6;
+    color: #fff;
+}
+
+.custom-buttons-block__button.create-btn:hover::after {}
+
+.custom-buttons-block__button .custom-buttons-block__input {
+    width: 80%;
+    text-align: center;
+}
+
+.custom-text-block textarea {
+    width: 100%;
+}
+
+.custom-image-block__main {
+    width: 100%;
+    /* position: relative; */
+    /* display: flex; */
+}
+
+.custom-image-block__container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease 0s;
+    cursor: default;
+    padding: 10px;
+    gap: 5%;
+}
+
+.custom-image-block__button {
+    border-radius: 5px;
+    border: 2px dashed #0077ff;
+    color: #0077ff;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.custom-image-block__button:hover {
+    background-color: #0077ff;
+    color: #fff;
+}
+
+.custom-image-block__textbox {
+    flex-grow: 1;
+    padding: 0 10px;
+    min-height: 150px;
+    color: #4e0158;
+}
+
+.custom-image-block__input {
+    width: 100%;
+    height: 100%;
+    color: #4e0158;
+    border: 1px solid #4e0158;
+}
+
+.custom-image-block__input:focus {
+    outline: 2px solid #720281;
+}
+
+
+
+.custom-separator-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}

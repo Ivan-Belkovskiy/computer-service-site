@@ -1,5 +1,5 @@
 .settings-page-wrapper {
-    padding: 24px;
+    padding: 24px 0;
     background-color: #f9fafb;
     flex-grow: 1;
 }
@@ -33,6 +33,7 @@
 .control-form {
     background: white;
     padding: 24px;
+    margin: 0;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border: 1px solid #e5e7eb;
@@ -71,7 +72,9 @@
     font-size: 14px;
 }
 
-.form-group select, .form-group input, .form-group textarea {
+.form-group select,
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #d1d5db;
@@ -81,7 +84,9 @@
     box-sizing: border-box;
 }
 
-.form-group select:focus, .form-group input:focus, .form-group textarea:focus {
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #720281;
     box-shadow: 0 0 0 3px rgba(114, 2, 129, 0.1);
@@ -102,4 +107,24 @@
 
 .save-button:hover {
     background-color: #5a0166;
+}
+
+.form-group__row {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group__row span {
+    display: flex;
+}
+
+.form-group__row input {
+    display: flex;
+}
+
+.control-form select {
+    cursor: pointer;
 }

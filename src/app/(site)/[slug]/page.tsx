@@ -44,6 +44,8 @@ export default async function DynamicPage({ params }: PageProps) {
     }
   });
 
+  const customSections = await prisma.custom_sections.findMany({});
+
   if (!pageStructure) {
     notFound();
   }
@@ -52,6 +54,7 @@ export default async function DynamicPage({ params }: PageProps) {
     <div className={`page-${slug}`}>
       <SectionRenderer 
         sections={pageStructure.sections} 
+        customSections={customSections}
         settings={settings} 
       />
     </div>

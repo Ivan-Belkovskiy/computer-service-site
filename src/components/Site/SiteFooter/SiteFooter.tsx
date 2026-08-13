@@ -43,7 +43,7 @@ export default function SiteFooter({ settings, pageLinks }: {
                     <button className="site-footer__button" onClick={() => setModalOpened(true)}>Оставить заявку</button>
                 </div>
             </div>
-            <span className="site-footer__label">© {new Date().getFullYear()} computer-service-site</span>
+            <span className="site-footer__label">© {new Date().getFullYear()} {settings?.['site_title'] || "computer-service-site"}</span>
             <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} />
         </footer>
     )

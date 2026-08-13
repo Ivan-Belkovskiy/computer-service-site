@@ -3,9 +3,17 @@
 import Image from "next/image";
 import "./ControlPanelNavigation.css";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useControlPanel } from "@/context/ControlPanelContext";
 
 export default function ControlPanelNavigation({ settings }: { settings?: Record<string, string> }) {
-    return (
+    const url = usePathname();
+    
+    const { sectionData, triggerSave, isSaving } = useControlPanel();
+
+    const isCustomSectionEditor = url.startsWith('/controlpanel/editor/custom-sections/');
+
+    if (url !== '/controlpanel/login') return (
         <div className="control-panel-navigation__container">
             <nav className="control-panel-navigation">
                 <ul className="control-panel-navigation__left">
@@ -19,35 +27,61 @@ export default function ControlPanelNavigation({ settings }: { settings?: Record
                     </li>
                     <h1 className="control-panel-navigation__title">Панель Управления</h1>
                 </ul>
+                
                 <ul className="control-panel-navigation__middle">
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/clients">Клиенты</Link>
-                    </li>
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/orders">Заявки</Link>
-                    </li>
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/services">Услуги и Цены</Link>
-                    </li>
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/editor">Редактор сайта</Link>
-                    </li>
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/settings">Настройки сайта</Link>
-                    </li>
-                    {/* <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/">Основная информация</Link>
-                    </li>
-                    <li className="control-panel-navigation__button link">
-                        <Link href="/controlpanel/data">Данные</Link>
-                    </li> */}
+                    {isCustomSectionEditor ? (
+                        <li className="control-panel-navigation__button text-info">
+                            <span>Редактирование секции: </span>
+                            <strong>{sectionData?.name || sectionData?.title || 'Загрузка...'}</strong>
+                        </li>
+                    ) : (
+                        <>
+                            <li className="control-panel-navigation__button link">
+                                <Link href="/controlpanel/clients">Клиенты</Link>
+                            </li>
+                            <li className="control-panel-navigation__button link">
+                                <Link href="/controlpanel/orders">Заявки</Link>
+                            </li>
+                            <li className="control-panel-navigation__button link">
+                                <Link href="/controlpanel/services">Услуги и Цены</Link>
+                            </li>
+                            <li className="control-panel-navigation__button link">
+                                <Link href="/controlpanel/editor">Редактор сайта</Link>
+                            </li>
+                            <li className="control-panel-navigation__button link">
+                                <Link href="/controlpanel/settings">Настройки сайта</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
-                <li className="control-panel-navigation__right">
-                    <Link href="/" target="_blank" className="control-panel-navigation__button return-to-site-btn">
-                        ↩ Перейти на сайт
-                    </Link>
-                </li>
+                
+                <div className="control-panel-navigation__right">
+                    {(isCustomSectionEditor && sectionData) ? (
+                        <>
+                            <Link 
+                                href={`/controlpanel/editor?initialMode=custom-sections&selectedCustomSection=${sectionData.id}`} 
+                                className="control-panel-navigation__button return-to-site-btn"
+                            >
+                                ↩ Назад к списку секций
+                            </Link>
+
+                            <button
+                                type="button"
+                                onClick={triggerSave}
+                                disabled={isSaving}
+                                className="control-panel-navigation__button return-to-site-btn"
+                                style={{ opacity: isSaving ? 0.7 : 1, cursor: isSaving ? 'wait' : 'pointer' }}
+                            >
+                                {isSaving ? 'Сохранение...' : 'Сохранить данные'}
+                            </button>
+                        </>
+                    ) : (
+                        <Link href="/" target="_blank" className="control-panel-navigation__button return-to-site-btn">
+                            ↩ Перейти на сайт
+                        </Link>
+                    )}
+                </div>
             </nav>
         </div>
-    )
+    );
 }

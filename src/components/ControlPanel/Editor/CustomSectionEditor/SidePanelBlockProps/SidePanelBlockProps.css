@@ -1,0 +1,60 @@
+.sidepanel-block-prop {
+    margin-top: 10px;
+}
+
+.sidepanel-block-prop__label {
+    color: #4e0158;
+}
+
+
+.sidepanel-block-prop__select,
+.sidepanel-block-prop__input {
+    margin-left: 5px;
+    border: 1px solid #4e0158;
+    color: #4e0158;
+    padding: 0 4px;
+    /* cursor: pointer; */
+}
+
+.sidepanel-block-prop__select {
+    cursor: pointer;
+}
+
+.sidepanel-block-prop__select:focus {
+    outline: 1px solid #ff00ea;
+    /* cursor: pointer; */
+}
+
+.sidepanel-block-props__button {
+    width: 100%;
+    padding: 5px;
+    background-color: #720281;
+    color: #fff;
+    margin-top: 15px;
+    outline: 2px solid transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.sidepanel-block-props__button:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #720281;
+    outline-color: #720281;
+}
+
+.sidepanel-block-props__button.delete-button {
+    width: 100%;
+    padding: 5px;
+    background-color: #bd0000;
+    color: #fff;
+    margin-top: 15px;
+    outline: 2px solid transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.sidepanel-block-props__button.delete-button:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #bd0000;
+    outline-color: #bd0000;
+}

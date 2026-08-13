@@ -1,0 +1,188 @@
+.editor-custom-section-data {
+    min-width: 450px;
+    border: 3px solid #720281;
+}
+
+.editor-custom-section-data__title {
+    background-color: #fff;
+    color: #720281;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 3px solid #720281;
+}
+
+.editor-custom-section-data__elements {
+    width: 100%;
+}
+
+.custom-section-data-element {
+    display: flex;
+    /* padding: 4px 8px; */
+    background-color: #fff;
+    font-size: 17px;
+    transition: all 0.3s ease 0s;
+    color: #720281;
+    cursor: pointer;
+}
+
+.custom-section-data-element:hover,
+.custom-section-data-element.selected {
+    background-color: #720281;
+    color: #fff;
+}
+
+
+.custom-section-data-element__left {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 4px 8px;
+}
+
+.custom-section-data-element__right {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 4px 8px;
+}
+
+.custom-section-data-element__index {
+    /* color: #720281; */
+    font-weight: 800;
+    border: 1px solid #720281;
+    padding: 0 5px;
+}
+
+.custom-section-data-element__name {
+    /* color: #720281; */
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+
+.custom-section-data-element__url {
+    border: 2px solid #720281;
+    background-color: #fff;
+    color: #720281;
+    padding-right: 20px;
+    /* text-decoration: underline; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease 0s;
+}
+
+.custom-section-data-element__url::before {
+    content: "URL:";
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #720281;
+    margin-right: 20px;
+    font-size: 13px;
+    padding: 3px;
+}
+
+.custom-section-data-element:hover .custom-section-data-element__index,
+.custom-section-data-element.selected .custom-section-data-element__index {
+    border-color: #fff;
+}
+
+.custom-section-data-element:hover .custom-section-data-element__url::before,
+.custom-section-data-element.selected .custom-section-data-element__url::before {
+    background-color: #fff;
+    color: #720281;
+    text-decoration: none !important;
+    text-decoration-color: transparent;
+    border-right: 3px solid #720281;
+}
+
+
+.editor-custom-section-data__button {
+    width: 100%;
+    background-color: #fff;
+    color: #720281;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-top: 3px solid #720281;
+    transition: all 0.3s ease 0s;
+}
+
+.editor-custom-section-data__button:hover {
+    cursor: pointer;
+    background-color: #720281;
+    color: #fff;
+}
+
+.editor-custom-section-data__button.open-block-editor-btn {
+    width: 100%;
+    padding: 7px;
+    margin-left: 10px;
+    background-color: #720281;
+    color: #fff;
+    outline: 2px solid transparent;
+    transition: all 0.3s ease 0s;
+    margin-bottom: 5px;
+    border: none;
+    margin: 0;
+}
+
+.editor-custom-section-data__button.open-block-editor-btn:hover {
+    background-color: #fff;
+    color: #720281;
+    cursor: pointer;
+    outline-color: #720281;
+}
+
+.editor-custom-section-data__button.delete-section-button {
+    background-color: #da0000;
+    color: #fff;
+    outline: 2px solid transparent;
+    border: none;
+}
+
+.editor-custom-section-data__button.delete-section-button:hover {
+    background-color: #fff;
+    color: #da0000;
+    outline-color: #da0000;
+}
+
+.editor-custom-section-data__block {
+    border: 2px solid #720281;
+    margin: 10px;
+    color: #720281;
+    padding: 0 5px;
+}
+
+.editor-custom-section-data__block .editor-custom-section-data__button {
+    margin: 5px 0;
+}
+
+.editor-custom-section-data__header {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.editor-custom-section-data__header h3 {
+    color: #720281;
+    font-weight: bold;
+}
+
+.editor-custom-section-data__id {
+    color: #720281;
+    opacity: 0.8;
+    margin-left: 5px;
+}

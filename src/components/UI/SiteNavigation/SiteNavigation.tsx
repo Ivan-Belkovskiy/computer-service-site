@@ -24,7 +24,7 @@ export default function SiteNavigation({ settings, menuOnly, pageLinks }: {
         <ul className={(inFooter) ? `site-navigation__menu` : `site-navigation__middle --desktop-only`}>
             {pageLinks?.map(l => (
                 <li className="site-navigation__button link" key={l.id}>
-                    <Link href={(l.slug !== '/') ? `/${l.slug}` : ''} >{l.name}</Link>
+                    <Link href={(l.slug !== '/') ? `/${l.slug}` : l.slug} >{l.name}</Link>
                 </li>
             ))}
             {/* <li className="site-navigation__button link">

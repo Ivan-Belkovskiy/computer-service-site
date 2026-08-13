@@ -21,21 +21,21 @@
 }
 
 .control-panel-navigation__left {
-    width: 50%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .control-panel-navigation__middle {
-    width: 60%;
+    width: 55%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .control-panel-navigation__right {
-    width: 30%;
+    width: 35%;
     display: flex;
     justify-content: end;
     align-items: center;
@@ -78,4 +78,12 @@
     background-color: #fff;
     color: #4e0158;
     border: 2px solid #4e0158;
+}
+
+.control-panel-navigation .text-info {
+    font-size: 18px;
+}
+
+.control-panel-navigation .text-info strong {
+    margin-left: 10px;
 }

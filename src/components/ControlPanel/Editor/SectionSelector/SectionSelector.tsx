@@ -1,6 +1,6 @@
 'use client';
 
-import { PageSection } from "@/app/controlpanel/(protected)/editor/page";
+import { CustomSection, PageSection } from "@/app/controlpanel/(protected)/editor/page";
 import "./SectionSelector.css";
 import { useState } from "react";
 import { updateSectionProps } from "@/app/actions/editor";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 interface SectionSelectorProps {
     sections?: PageSection[];
+    customSections?: CustomSection[];
     isPageSelected: boolean;
     onMove: (currentIndex: number, direction: 'up' | 'down') => void;
     onDelete: (sectionId: number) => void;
@@ -15,6 +16,7 @@ interface SectionSelectorProps {
 
 export default function SectionSelector({
     sections = [],
+    customSections = [],
     isPageSelected,
     onMove,
     onDelete
@@ -67,13 +69,17 @@ export default function SectionSelector({
                         const isEditing = selectedSectionId === s.id;
                         const currentProps = (s.props as Record<string, any>) || {};
 
+                        const customSectionData = customSections.find(cs => cs.id === s.custom_section_id);
+
                         return (
                             <div className={`section-selector-element ${isEditing ? 'active' : ''}`} key={s.id}>
                                 <div className="section-selector-element__top">
                                     <div className="section-selector-element__left">
                                         <span className="section-selector-element__index">{idx + 1}</span>
                                         <span className="section-selector-element__name">
-                                            {s.type === 'HERO' ? `${s.name} (Hero Section)` : s.name}
+                                            {s.type === 'CUSTOM' ? (
+                                                customSectionData?.name
+                                            ) : s.type === 'HERO' ? `${s.name} (Hero Section)` : s.name}
                                         </span>
                                     </div>
                                     <div className="section-selector-element__right">
@@ -105,7 +111,7 @@ export default function SectionSelector({
                                 {isEditing && (
                                     <div className="section-selector-element__bottom">
                                         <form onSubmit={(e) => handleSaveProps(e, s.id, s.type)} className="section-editor-form">
-                                            <h4>Настройки секции "{s.name}":</h4>
+                                            <h4>Настройки секции "{(s.type === 'CUSTOM' ? customSectionData?.name : s.name)}":</h4>
                                             
                                             {s.type === 'SERVICES' && (
                                                 <div className="section-editor-form__column">

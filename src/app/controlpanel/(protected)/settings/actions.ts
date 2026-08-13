@@ -27,7 +27,10 @@ export async function updateSettings(prevState: SettingsActionState, formData: F
         "contact_phone",
         "contact_email",
         "work_hours",
-        "order_hours"
+        "order_hours",
+
+        "privacy_policy_url",
+        "public_offer_url",
     ];
 
     try {

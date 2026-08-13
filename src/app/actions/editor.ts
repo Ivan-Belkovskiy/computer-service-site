@@ -48,8 +48,9 @@ export async function createCustomSectionTemplate(name: string) {
 export async function addSectionToPage(data: {
   pageId: number;
   type: string;
-  name: string;
+  name?: string;
   customSectionId?: number;
+  props?: Record<string, any>;
   nextOrder: number;
 }) {
   try {
@@ -60,7 +61,7 @@ export async function addSectionToPage(data: {
         name: data.name,
         display_order: data.nextOrder,
         custom_section_id: data.customSectionId || null,
-        props: {},
+        props: data.props || {},
       }
     });
 

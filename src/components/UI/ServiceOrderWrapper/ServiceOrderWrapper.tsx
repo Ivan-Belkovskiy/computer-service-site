@@ -23,7 +23,7 @@ export default function ServiceOrderWrapper({ serviceName }: ServiceOrderWrapper
             <NewOrderModal 
                 isOpened={isModalOpened} 
                 onClose={() => setModalOpened(false)} 
-                onSubmit={() => setModalOpened(false)}
+                // onSubmit={() => setModalOpened(false)}
             />
         </>
     );

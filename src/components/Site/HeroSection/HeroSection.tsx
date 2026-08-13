@@ -35,7 +35,7 @@ export default function HeroSection({ initialSettings }: { initialSettings: Reco
                 </div>
             </div>
 
-            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} onSubmit={() => setModalOpened(false)} />
+            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} /*onSubmit={() => setModalOpened(false)}*/ />
 
         </section>
     )
