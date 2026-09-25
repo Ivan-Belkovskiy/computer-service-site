@@ -27,7 +27,7 @@ const prismaClientSingleton = () => {
     //     // connectionLimit: 5,
     //     ssl: true
     // });
-    const adapter = new PrismaMariaDb('mysql://root:Dragon851171!@localhost:3306/computer_service_site_db');
+    const adapter = new PrismaMariaDb('mysql://root:Dragon851171!@127.0.0.1:3306/computer_service_site_db');
 
     // writeFileSync(path.join(process.cwd(), 'log.txt'), String(process.env.DATABASE_URL))
 

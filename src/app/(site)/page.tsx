@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import SectionRenderer from "@/components/Site/SectionRenderer/SectionRenderer";
 import { Metadata } from "next";
 import { getSiteSettings, loadMetadata } from "../actions";
+import { trackEvent } from "@/lib/tracking";
+import PageTracker from "@/components/Analytics/PageTracker";
 
 export async function generateMetadata(): Promise<Metadata> {
   const meta = await loadMetadata();
@@ -25,9 +27,13 @@ export default async function Home() {
     }
   });
 
+  // trackEvent('page_open');
+
   return (
     <div className="main-page">
+      <PageTracker path="/" event="page_open" />
       <SectionRenderer 
+        customSections={[]}
         sections={pageStructure?.sections || []} 
         settings={settings} 
       />

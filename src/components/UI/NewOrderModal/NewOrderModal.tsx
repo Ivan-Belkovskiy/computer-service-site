@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import PhoneInput from "../PhoneInput/PhoneInput";
 import "./NewOrderModal.css";
 import { createOrder } from "@/app/actions";
+import { usePathname } from "next/navigation";
+import PageTracker from "@/components/Analytics/PageTracker";
+import { trackEvent } from "@/lib/tracking";
 
 interface ValidationErrors {
     name?: boolean;
@@ -49,9 +52,12 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl 
         return isNameValid && isPhoneValid && agreed;
     };
 
+    const currentUrl = usePathname();
+
     const handleSubmit = async () => {
         if (validateData(name, phone, isAgreed)) {
             setLoading(true);
+            trackEvent('order_modal_submit', currentUrl);
             const res = await createOrder(name, phone, description, email, address);
             setLoading(false);
             setSubmitResult(res);
@@ -67,6 +73,7 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl 
 
     useEffect(() => {
         if (isOpened) {
+            trackEvent('order_modal_open', currentUrl);
             if (submitResult) setSubmitResult(undefined);
             setName("");
             setPhone("");

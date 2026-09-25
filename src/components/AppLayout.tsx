@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from "react";
 import SiteFooter from "./Site/SiteFooter/SiteFooter";
 import SiteNavigation from "./UI/SiteNavigation/SiteNavigation";
+import TimeOnPageTracker from "./Analytics/TimeOnPageTracker";
 
 export default function AppLayout({ children, siteSettings, pageLinks }: {
   children?: ReactNode;
@@ -45,6 +46,7 @@ export default function AppLayout({ children, siteSettings, pageLinks }: {
 
   return (
     <>
+      {/* <TimeOnPageTracker /> */}
       <SiteNavigation settings={siteSettings} pageLinks={pageLinks} />
       <main>{children}</main>
       <SiteFooter settings={siteSettings} pageLinks={pageLinks} />

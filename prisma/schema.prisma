@@ -76,6 +76,25 @@ enum OrderStatus {
   CANCELLED  
 }
 
+enum OrderItemType {
+  ACTION
+  PART     
+  SOFTWARE  
+}
+
+model order_items {
+  id          Int           @id @default(autoincrement())
+  order_id    Int
+  type        OrderItemType @default(ACTION)
+  name        String        @db.VarChar(255)
+  quantity    Int           @default(1)
+  price       Int           @default(0)
+  
+  orders      orders        @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([order_id], map: "order_items_order_fkey")
+}
+
 model orders {
   id          Int          @id @default(autoincrement())
   client_id   Int?
@@ -87,9 +106,15 @@ model orders {
   description String?
   address     String?
 
+  document_number   String?
+  video_url         String?
+
+
   clients  clients?  @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   masters  masters?  @relation(fields: [master_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   partners partners? @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  order_items order_items[]
 
   @@index([client_id], map: "orders_client_fkey")
   @@index([master_id], map: "orders_master_fkey")
@@ -145,4 +170,15 @@ model custom_sections {
   content       Json?            
   
   page_sections page_sections[]
+}
+
+model tracking_events {
+  id        String   @id @default(uuid())
+  event     String  
+  path      String   
+  userAgent String?  
+  duration  Int?
+  createdAt DateTime @default(now())
+
+  @@index([event, createdAt]) 
 }

@@ -56,6 +56,10 @@
     background-position-x: -50%;
 }
 
+.control-panel-navigation__button.inline-button {
+    padding: 0;
+}
+
 .control-panel-navigation__button.link:hover {
     background-position-x: 90%;
     color: #fff;
