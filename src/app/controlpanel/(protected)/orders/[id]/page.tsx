@@ -27,8 +27,36 @@ export default async function OrderDetailsPage({
             <Link href="/controlpanel/orders" className="back-link">
                 &larr; Назад к списку заявок
             </Link>
-            
-            <header className="order-details-header">
+
+            <div className="order-details-page__main">
+                <div className="order-details__left">
+
+                    <header className="order-details-header">
+                        <h2>Заявка #{order.id}</h2>
+                        <p className="order-date">от {order.created_at?.toLocaleString("ru-RU")}</p>
+                    </header>
+                    <div className="info-section">
+                        <div className="info-card">
+                            <h3>Данные клиента</h3>
+                            <p><strong>Имя:</strong> {order.client?.full_name || "Не указано"}</p>
+                            <p><strong>Телефон:</strong> {order.client?.phone || "Не указан"}</p>
+                            <p><strong>Адрес ремонта:</strong> {order.address || "В мастерской"}</p>
+                        </div>
+
+                        <div className="info-card">
+                            <h3>Описание неисправности</h3>
+                            <p className="description-text">{order.description || "Описание отсутствует"}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="order-details__right">
+                    <OrderControlForm order={order} allMasters={allMasters} />
+                </div>
+            </div>
+
+            {/* <header className="order-details-header">
                 <h2>Заявка #{order.id}</h2>
                 <p className="order-date">от {order.created_at?.toLocaleString("ru-RU")}</p>
             </header>
@@ -49,7 +77,7 @@ export default async function OrderDetailsPage({
                 </div>
 
                 <OrderControlForm order={order} allMasters={allMasters} />
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -39,6 +39,7 @@ export default function InteractiveOrderTable({
                         <th>Статус</th>
                         <th>Мастер</th>
                         <th>Сумма (BYN)</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,9 +51,9 @@ export default function InteractiveOrderTable({
                         filtered.map((order) => (
                             <tr key={order.id}>
                                 <td>
-                                    <Link href={`/controlpanel/orders/${order.id}`} className="text-[#720281] hover:underline font-bold">
-                                        #{order.id}
-                                    </Link>
+                                    {/* <Link href={`/controlpanel/orders/${order.id}`} className="text-[#720281] hover:underline font-bold"> */}
+                                    #{order.id}
+                                    {/* </Link> */}
                                 </td>
                                 {/* <td>#{order.id}</td> */}
                                 <td>{formatDate(order.created_at)}</td>
@@ -68,6 +69,11 @@ export default function InteractiveOrderTable({
                                 </td>
                                 <td>{order.master?.full_name || "Не назначен"}</td>
                                 <td className="orders-table__price">{order.total_price ? `${order.total_price} BYN` : "—"}</td>
+                                <td>
+                                    <Link href={`/controlpanel/orders/${order.id}`} className="text-[#720281] hover:underline font-bold">
+                                        Редактировать ⇒
+                                    </Link>
+                                </td>
                             </tr>
                         ))
                     )}

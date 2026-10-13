@@ -15,13 +15,16 @@ export async function updateOrder(prevState: ActionState, formData: FormData): P
     const masterIdRaw = formData.get("masterId") as string;
     const totalPriceRaw = formData.get("totalPrice") as string;
 
+    const document_number = formData.get('documentNumber') as string;
+    const video_url = formData.get('videoUrl') as string;
+
     const master_id = masterIdRaw ? parseInt(masterIdRaw, 10) : null;
     const total_price = totalPriceRaw ? parseInt(totalPriceRaw, 10) : null;
 
     try {
         await prisma.order.update({
             where: { id: orderId },
-            data: { status, master_id, total_price },
+            data: { status, master_id, total_price, document_number, video_url },
         });
 
         revalidatePath("/controlpanel/orders");

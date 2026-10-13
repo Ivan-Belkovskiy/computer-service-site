@@ -79,6 +79,30 @@ export default function OrderControlForm({ order, allMasters }: OrderControlForm
                     />
                 </div>
 
+                <div className="form-group">
+                    <label htmlFor="documentNumber">№ документа (чек или акт приема-передачи)</label>
+                    <input 
+                        type="text" 
+                        name="documentNumber" 
+                        id="documentNumber" 
+                        key={order.document_number || 'no-document-number'}
+                        defaultValue={order.document_number || ""} 
+                        placeholder="Номер чека или акта приема-передачи"
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="videoUrl">URL видео</label>
+                    <input 
+                        type="text" 
+                        name="videoUrl" 
+                        id="videoUrl" 
+                        key={order.video_url || 'no-video-url'}
+                        defaultValue={order.video_url || ""} 
+                        placeholder="Видеозапись ремонта (при выезде к клиенту)"
+                    />
+                </div>
+
                 <button type="submit" className="save-button" disabled={isPending}>
                     {isPending ? "Сохранение..." : "Сохранить изменения"}
                 </button>
