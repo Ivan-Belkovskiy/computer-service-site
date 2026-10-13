@@ -7,7 +7,7 @@ import { CustomSection } from "../controlpanel/(protected)/editor/page";
 
 export async function createCustomSection(name: string, fields: PropSchemaField[]) {
   try {
-    const section = await prisma.custom_sections.create({
+    const section = await prisma.customSection.create({
       data: {
         name,
         props: fields as any[],
@@ -24,7 +24,7 @@ export async function createCustomSection(name: string, fields: PropSchemaField[
 
 export async function updateCustomSection(id: number, data: Partial<CustomSection>) {
   try {
-    const updated = await prisma.custom_sections.update({
+    const updated = await prisma.customSection.update({
       where: {
         id,
       },
@@ -45,7 +45,7 @@ export async function updateCustomSection(id: number, data: Partial<CustomSectio
 
 export async function getCustomSections() {
   try {
-    const sections = await prisma.custom_sections.findMany({
+    const sections = await prisma.customSection.findMany({
         orderBy: {
             id: 'asc',
         }

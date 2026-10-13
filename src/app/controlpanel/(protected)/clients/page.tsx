@@ -6,7 +6,7 @@ import "./page.css";
 export const revalidate = 0;
 
 export default async function ClientsPage() {
-  const clients = await prisma.clients.findMany({
+  const clients = await prisma.client.findMany({
     include: {
       orders: true,
     },

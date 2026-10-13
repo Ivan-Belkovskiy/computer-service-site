@@ -6,55 +6,36 @@ datasource db {
   provider = "mysql"
 }
 
-model categories {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(120)
-  services services[]
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique @db.VarChar(120)
+  services Service[]
+
+  @@map("categories")
 }
 
-model clients {
-  id        Int      @id @default(autoincrement())
-  full_name String   @db.VarChar(150)
-  phone     String   @unique @db.VarChar(20)
-  email     String?  @db.VarChar(100)
-  orders    orders[]
-}
+model Service {
+  id               Int         @id @default(autoincrement())
+  name             String      @db.VarChar(90)
+  price            Int
+  unit             PricingUnit @default(FIXED)
+  slug             String      @unique @db.VarChar(80)
+  isStartingPrice  Boolean     @default(false)
+  category_id      Int?
+  description      String?     @db.Text
+  device_type      DeviceType  @default(COMMON)
+  display_order    Int         @default(0)
+  is_active        Boolean     @default(true)
+  created_at       DateTime    @default(now())
+  updated_at DateTime @updatedAt @default(now())
 
-model masters {
-  id        Int      @id @default(autoincrement())
-  full_name String   @db.VarChar(150)
-  phone     String   @unique @db.VarChar(20)
-  email     String?  @db.VarChar(100)
-  address   String?
-  orders    orders[]
-}
+  category   Category?   @relation(fields: [category_id], references: [id], onUpdate: SetNull)
+  orderItems OrderItem[]
 
-model partners {
-  id             Int      @id @default(autoincrement())
-  name           String   @db.VarChar(180)
-  contact_person String   @db.VarChar(180)
-  phone          String   @unique @db.VarChar(20)
-  address        String?
-  unp            String   @unique @db.VarChar(9)
-  specialization String
-  is_active      Boolean  @default(true)
-  orders         orders[]
-}
-
-model services {
-  id              Int         @id @default(autoincrement())
-  name            String?     @db.VarChar(90)
-  price           Int
-  unit            PricingUnit @default(FIXED)
-  slug            String      @unique @db.VarChar(80)
-  isStartingPrice Boolean     @default(false)
-  category        Int?
-  description     String?
-  device_type     DeviceType  @default(COMMON)
-  displayOrder    Int         @default(0)
-  categories      categories? @relation(fields: [category], references: [id], onUpdate: SetNull, map: "services_category_id_fkey")
-
-  @@index([category], map: "services_category_fkey")
+  @@index([category_id])
+  @@index([category_id, display_order])
+  @@map("services")
 }
 
 enum PricingUnit {
@@ -69,116 +50,231 @@ enum DeviceType {
   COMMON
 }
 
+
+model Client {
+  id         Int      @id @default(autoincrement())
+  full_name  String   @db.VarChar(150)
+  phone      String   @unique @db.VarChar(20)
+  email      String?  @db.VarChar(100)
+  address    String?  @db.VarChar(255)
+  notes      String?  @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  orders Order[]
+
+  @@map("clients")
+}
+
+model Master {
+  id         Int      @id @default(autoincrement())
+  full_name  String   @db.VarChar(150)
+  phone      String   @unique @db.VarChar(20)
+  email      String?  @db.VarChar(100)
+  address    String?  @db.VarChar(255)
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  orders Order[]
+
+  @@map("masters")
+}
+
+model Partner {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(180)
+  contact_person String   @db.VarChar(180)
+  phone          String   @unique @db.VarChar(20)
+  email          String?  @db.VarChar(100)
+  address        String?  @db.VarChar(255)
+  unp            String   @unique @db.VarChar(9)
+  specialization String   @db.VarChar(180)
+  is_active      Boolean  @default(true)
+  created_at     DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  orders Order[]
+
+  @@map("partners")
+}
+
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  client_id       Int?
+  status          OrderStatus @default(CREATED)
+  master_id       Int?
+  partner_id      Int?
+  total_price     Int?
+  created_at      DateTime    @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  completed_at    DateTime?
+  description     String?     @db.Text
+  address         String?     @db.VarChar(255)
+
+  document_number String?     @unique @db.VarChar(50)
+  video_url       String?     @db.VarChar(500)
+
+  client Client? @relation(fields: [client_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  master  Master?  @relation(fields: [master_id], references: [id], onDelete: SetNull)
+  partner Partner? @relation(fields: [partner_id], references: [id], onDelete: SetNull)
+
+  items OrderItem[]
+
+  @@index([created_at])
+  @@index([status, created_at])
+  @@index([client_id])
+  @@index([master_id])
+  @@index([partner_id])
+  @@map("orders")
+}
+
 enum OrderStatus {
-  CREATED  
+  CREATED
   IN_PROGRESS
-  COMPLETED  
-  CANCELLED  
+  COMPLETED
+  CANCELLED
+}
+
+model OrderItem {
+  id         Int           @id @default(autoincrement())
+  order_id   Int
+  type       OrderItemType @default(ACTION)
+  name       String        @db.VarChar(255)
+  quantity   Int           @default(1)
+  price      Int           @default(0)
+  service_id Int?
+  notes      String?       @db.Text
+  created_at DateTime      @default(now())
+
+  order   Order    @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  service Service? @relation(fields: [service_id], references: [id], onDelete: SetNull)
+
+  @@index([order_id])
+  @@index([service_id])
+  @@map("order_items")
 }
 
 enum OrderItemType {
   ACTION
-  PART     
-  SOFTWARE  
+  PART
+  SOFTWARE
 }
 
-model order_items {
-  id          Int           @id @default(autoincrement())
-  order_id    Int
-  type        OrderItemType @default(ACTION)
-  name        String        @db.VarChar(255)
-  quantity    Int           @default(1)
-  price       Int           @default(0)
-  
-  orders      orders        @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([order_id], map: "order_items_order_fkey")
+model SiteSetting {
+  id          Int     @id @default(autoincrement())
+  key         String  @unique @db.VarChar(100)
+  value       String  @db.Text
+  description String? @db.VarChar(255)
+
+  @@map("site_settings")
 }
 
-model orders {
-  id          Int          @id @default(autoincrement())
-  client_id   Int?
-  status      OrderStatus? @default(CREATED)
-  master_id   Int?
-  partner_id  Int?
-  total_price Int?
-  created_at  DateTime?    @default(now())
-  description String?
-  address     String?
+model LegalDocument {
+  id             Int          @id @default(autoincrement())
+  slug           String       @unique @db.VarChar(80)
+  title          String       @db.VarChar(180)
+  url            String       @db.VarChar(500)
+  url_type       LegalUrlType @default(PAGE)
+  display_order  Int          @default(0)
+  is_active      Boolean      @default(true)
+  show_in_footer Boolean      @default(true)
+  show_in_modal  Boolean      @default(false)
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @default(now()) @updatedAt
 
-  document_number   String?
-  video_url         String?
-
-
-  clients  clients?  @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  masters  masters?  @relation(fields: [master_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  partners partners? @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  
-  order_items order_items[]
-
-  @@index([client_id], map: "orders_client_fkey")
-  @@index([master_id], map: "orders_master_fkey")
-  @@index([partner_id], map: "orders_partner_fkey")
+  @@index([display_order])
+  @@map("legal_documents")
 }
 
-model site_settings {
-  id    Int    @id @default(autoincrement())
-  key   String @unique
-  value String @db.Text
+enum LegalUrlType {
+  PAGE
+  EXTERNAL
 }
 
-model admin_users {
-  id        Int      @id @default(autoincrement())
-  login     String   @unique
-  password  String  
-  createdAt DateTime @default(now())
+
+model AdminUser {
+  id            Int       @id @default(autoincrement())
+  login         String    @unique @db.VarChar(50)
+  email         String?   @unique @db.VarChar(100)
+  password      String    @db.VarChar(255)
+  role          AdminRole @default(ADMIN)
+  is_active     Boolean   @default(true)
+  last_login_at DateTime?
+  created_at    DateTime  @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  @@map("admin_users")
 }
 
-model site_pages {
+enum AdminRole {
+  ADMIN
+  MANAGER
+  VIEWER
+}
+
+
+model SitePage {
+  id                   Int            @id @default(autoincrement())
+  slug                 String         @unique @db.VarChar(50)
+  name                 String         @db.VarChar(100)
+  description          String?        @db.VarChar(250)
+  display_in_navigation Boolean       @default(true)
+  is_published         Boolean        @default(true)
+  created_at           DateTime       @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  sections PageSection[]
+
+  @@map("site_pages")
+}
+
+model PageSection {
   id                Int             @id @default(autoincrement())
-  slug              String          @unique @db.VarChar(50) 
-  name              String          @db.VarChar(100)  
-  description       String?          @db.VarChar(250)     
-  displayInNavigation  Boolean         @default(true) 
-  sections  page_sections[]
-}
-
-model page_sections {
-  id                Int              @id @default(autoincrement())
   page_id           Int
-  type              String           @db.VarChar(50) 
-  name              String?           @db.VarChar(100) 
-  display_order     Int              @default(0)
-  is_active         Boolean          @default(true)
-  
+  type              String          @db.VarChar(50)
+  name              String?         @db.VarChar(100)
+  display_order     Int             @default(0)
+  is_active         Boolean         @default(true)
   props             Json?
   content           Json?
-
   custom_section_id Int?
-  custom_sections   custom_sections? @relation(fields: [custom_section_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
-  page              site_pages       @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  page           SitePage        @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  custom_section CustomSection?  @relation(fields: [custom_section_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
-  @@index([page_id], map: "page_sections_page_fkey")
-  @@index([custom_section_id], map: "page_sections_custom_section_fkey")
+  @@index([page_id])
+  @@index([custom_section_id])
+  @@index([page_id, display_order])
+  @@map("page_sections")
 }
 
-model custom_sections {
-  id            Int             @id @default(autoincrement())
-  name          String          @db.VarChar(100) 
+model CustomSection {
+  id            Int           @id @default(autoincrement())
+  name          String        @db.VarChar(100)
   props         Json?
-  content       Json?            
-  
-  page_sections page_sections[]
+  content       Json?
+  created_at    DateTime      @default(now())
+  updated_at DateTime @updatedAt @default(now())
+
+  page_sections PageSection[]
+
+  @@map("custom_sections")
 }
 
-model tracking_events {
-  id        String   @id @default(uuid())
-  event     String  
-  path      String   
-  userAgent String?  
-  duration  Int?
-  createdAt DateTime @default(now())
 
-  @@index([event, createdAt]) 
+model TrackingEvent {
+  id         String   @id @default(uuid(7))
+  event      String   @db.VarChar(80)
+  path       String   @db.VarChar(500)
+  user_agent String?  @db.VarChar(500)
+  duration   Int?
+  created_at DateTime @default(now())
+
+  @@index([event, created_at])
+  @@index([path])
+  @@index([created_at])
+  @@map("tracking_events")
 }

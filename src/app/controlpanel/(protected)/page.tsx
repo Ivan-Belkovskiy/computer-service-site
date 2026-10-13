@@ -17,7 +17,7 @@ import "./page.css";
 
 export default async function ControlPanelPage() {
 
-    const analyticsData = await prisma.tracking_events.groupBy({
+    const analyticsData = await prisma.trackingEvent.groupBy({
         by: "event",
         _count: {
             _all: true

@@ -4,6 +4,7 @@ import FeaturesSection from "@/components/Site/FeaturesSection/FeaturesSection";
 import ContactsSection from "@/components/Site/ContactsSection/ContactsSection";
 import CustomSectionRenderer from "@/components/Site/CustomSectionRenderer/CustomSectionRenderer";
 import { CustomSection, PageSection } from "@/app/controlpanel/(protected)/editor/page";
+import { LegalDocumentLink } from "@/components/AppLayout";
 
 interface SectionData {
   id: number;
@@ -18,6 +19,7 @@ interface SectionRendererProps {
   settings: Record<string, any>;
   isEditMode?: boolean;
   selectedBlockId?: string | null;
+  legalDocuments?: LegalDocumentLink[];
   onSelectBlock?: (blockId: string) => void;
 }
 
@@ -27,6 +29,7 @@ export default function SectionRenderer({
   settings,
   isEditMode = false,
   selectedBlockId,
+  legalDocuments,
   onSelectBlock
 }: SectionRendererProps) {
   if (!sections || sections.length === 0) {
@@ -46,7 +49,7 @@ export default function SectionRenderer({
 
         switch (section.type) {
           case "HERO":
-            return <HeroSection key={section.id} initialSettings={settings} {...props} />;
+            return <HeroSection key={section.id} initialSettings={settings} legalDocuments={legalDocuments} {...props} />;
 
           case "SERVICES":
             return (
@@ -63,7 +66,7 @@ export default function SectionRenderer({
             return <FeaturesSection key={section.id} {...props} />;
 
           case "CONTACTS":
-            return <ContactsSection key={section.id} initialSettings={settings} {...props} />;
+            return <ContactsSection key={section.id} initialSettings={settings} legalDocuments={legalDocuments} {...props} />;
 
           case "CUSTOM":
           default:

@@ -4,8 +4,9 @@ import Image from 'next/image';
 import './HeroSection.css';
 import NewOrderModal from '@/components/UI/NewOrderModal/NewOrderModal';
 import { useState } from 'react';
+import { LegalDocumentLink } from '@/components/AppLayout';
 
-export default function HeroSection({ initialSettings }: { initialSettings: Record<string, string> }) {
+export default function HeroSection({ initialSettings, legalDocuments }: { initialSettings: Record<string, string>; legalDocuments?: LegalDocumentLink[]; }) {
 
     const [isModalOpened, setModalOpened] = useState<boolean>(false);
 
@@ -35,7 +36,7 @@ export default function HeroSection({ initialSettings }: { initialSettings: Reco
                 </div>
             </div>
 
-            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} /*onSubmit={() => setModalOpened(false)}*/ />
+            <NewOrderModal isOpened={isModalOpened} onClose={() => setModalOpened(false)} legalDocuments={legalDocuments} /*onSubmit={() => setModalOpened(false)}*/ />
 
         </section>
     )

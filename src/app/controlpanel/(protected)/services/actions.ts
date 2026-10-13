@@ -16,7 +16,7 @@ export async function createService(prevState: ServiceActionState, formData: For
     const unit = formData.get("unit") as any;              
     const price = parseInt(formData.get("price") as string, 10);
     const slug = formData.get("slug") as string;
-    const displayOrder = parseInt(formData.get("displayOrder") as string, 10);
+    const display_order = parseInt(formData.get("display_order") as string, 10);
     
     const isStartingPrice = formData.get("isStartingPrice") === "on";
 
@@ -25,7 +25,7 @@ export async function createService(prevState: ServiceActionState, formData: For
     }
 
     try {
-        await prisma.services.create({
+        await prisma.service.create({
             data: {
                 name,
                 description: description || null,
@@ -33,7 +33,7 @@ export async function createService(prevState: ServiceActionState, formData: For
                 unit,
                 price,
                 slug,
-                displayOrder: isNaN(displayOrder) ? 10 : displayOrder,
+                display_order: isNaN(display_order) ? 10 : display_order,
                 isStartingPrice,
             },
         });
@@ -56,7 +56,7 @@ export async function editService(prevState: ServiceActionState, formData: FormD
     const unit = formData.get("unit") as any;              
     const price = parseInt(formData.get("price") as string, 10);
     const slug = formData.get("slug") as string;
-    const displayOrder = parseInt(formData.get("displayOrder") as string, 10);
+    const display_order = parseInt(formData.get("display_order") as string, 10);
     
     const isStartingPrice = formData.get("isStartingPrice") === "on";
 
@@ -67,7 +67,7 @@ export async function editService(prevState: ServiceActionState, formData: FormD
     }
 
     try {
-        await prisma.services.update({
+        await prisma.service.update({
             where: {
                 id: service_id,
             },
@@ -77,7 +77,7 @@ export async function editService(prevState: ServiceActionState, formData: FormD
                 device_type,
                 unit,
                 price,
-                displayOrder: isNaN(displayOrder) ? 10 : displayOrder,
+                display_order: isNaN(display_order) ? 10 : display_order,
                 isStartingPrice,
             },
         });
@@ -93,7 +93,7 @@ export async function editService(prevState: ServiceActionState, formData: FormD
 
 export async function deleteService(id: number) {
     try {
-        await prisma.services.delete({
+        await prisma.service.delete({
             where: { id },
         });
         

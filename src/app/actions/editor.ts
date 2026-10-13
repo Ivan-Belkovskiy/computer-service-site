@@ -7,8 +7,8 @@ import { Page } from "../controlpanel/(protected)/editor/page";
 export async function swapSectionsOrder(id1: number, order1: number, id2: number, order2: number) {
   try {
     await prisma.$transaction([
-      prisma.page_sections.update({ where: { id: id1 }, data: { display_order: order1 } }),
-      prisma.page_sections.update({ where: { id: id2 }, data: { display_order: order2 } }),
+      prisma.pageSection.update({ where: { id: id1 }, data: { display_order: order1 } }),
+      prisma.pageSection.update({ where: { id: id2 }, data: { display_order: order2 } }),
     ]);
 
     revalidatePath("/(site)", "layout");
@@ -21,7 +21,7 @@ export async function swapSectionsOrder(id1: number, order1: number, id2: number
 
 export async function deleteSection(id: number) {
   try {
-    await prisma.page_sections.delete({ where: { id } });
+    await prisma.pageSection.delete({ where: { id } });
     revalidatePath("/(site)", "layout");
     return { success: true };
   } catch (error) {
@@ -32,7 +32,7 @@ export async function deleteSection(id: number) {
 
 export async function createCustomSectionTemplate(name: string) {
   try {
-    const template = await prisma.custom_sections.create({
+    const template = await prisma.customSection.create({
       data: {
         name,
         content: [],
@@ -54,7 +54,7 @@ export async function addSectionToPage(data: {
   nextOrder: number;
 }) {
   try {
-    const newSection = await prisma.page_sections.create({
+    const newSection = await prisma.pageSection.create({
       data: {
         page_id: data.pageId,
         type: data.type,
@@ -75,7 +75,7 @@ export async function addSectionToPage(data: {
 
 export async function updateSectionProps(id: number, props: Record<string, any>) {
   try {
-    await prisma.page_sections.update({
+    await prisma.pageSection.update({
       where: { id },
       data: { props }
     });
@@ -90,14 +90,14 @@ export async function updateSectionProps(id: number, props: Record<string, any>)
   }
 }
 
-export async function createPage(name: string, url: string, displayInNavigation: boolean, description?: string) {
+export async function createPage(name: string, url: string, display_in_navigation: boolean, description?: string) {
   try {
-    await prisma.site_pages.create({
+    await prisma.sitePage.create({
       data: {
         name,
         slug: url,
         description,
-        displayInNavigation
+        display_in_navigation
       }
     });
 
@@ -113,7 +113,7 @@ export async function createPage(name: string, url: string, displayInNavigation:
 
 export async function updatePage(id: number, data: Partial<Page>) {
   try {
-    await prisma.site_pages.update({
+    await prisma.sitePage.update({
       where: {
         id,
       },
@@ -135,7 +135,7 @@ export async function updatePage(id: number, data: Partial<Page>) {
 
 export async function deletePage(id: number) {
   try {
-    await prisma.site_pages.delete({
+    await prisma.sitePage.delete({
       where: {
         id,
       },

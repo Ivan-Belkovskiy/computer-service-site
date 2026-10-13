@@ -12,12 +12,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, skipped: 'bot' });
     }
 
-    await prisma.tracking_events.create({
+    await prisma.trackingEvent.create({
       data: {
         event,
         path: path || '/',
         duration: typeof duration === 'number' ? duration : null,
-        userAgent,
+        user_agent: userAgent,
       },
     });
 

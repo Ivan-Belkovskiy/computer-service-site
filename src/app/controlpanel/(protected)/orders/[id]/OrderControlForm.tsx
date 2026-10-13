@@ -2,7 +2,7 @@
 
 import { useActionState, startTransition, useEffect } from "react";
 import { updateOrder } from "../actions";
-import { OrderStatus, masters, orders } from "@prisma/client";
+import { OrderStatus, Master, Order } from "@prisma/client";
 import PopupNotification from "@/components/UI/PopupNotification/PopupNotification";
 
 const statusTranslations: Record<OrderStatus, string> = {
@@ -13,8 +13,8 @@ const statusTranslations: Record<OrderStatus, string> = {
 };
 
 interface OrderControlFormProps {
-    order: orders;
-    allMasters: masters[];
+    order: Order;
+    allMasters: Master[];
 }
 
 export default function OrderControlForm({ order, allMasters }: OrderControlFormProps) {

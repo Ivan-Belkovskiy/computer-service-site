@@ -23,12 +23,12 @@ export default async function ServicesSection({
     globalPadding
 }: ServicesSectionProps) {
 
-    const services = await prisma.services.findMany({
+    const services = await prisma.service.findMany({
         where: {
             device_type: deviceFilter,
         },
         orderBy: [
-            { displayOrder: 'asc' }
+            { display_order: 'asc' }
         ]
     });
 

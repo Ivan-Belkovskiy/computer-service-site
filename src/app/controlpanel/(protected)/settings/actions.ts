@@ -10,7 +10,7 @@ export type SettingsActionState = {
 } | null;
 
 export async function getSiteSettings(): Promise<Record<string, string>> {
-    const settingsArray = await prisma.site_settings.findMany();
+    const settingsArray = await prisma.siteSetting.findMany();
     
     const settingsObject: Record<string, string> = {};
     settingsArray.forEach(item => {
@@ -37,7 +37,7 @@ export async function updateSettings(prevState: SettingsActionState, formData: F
         await prisma.$transaction(
             keysToUpdate.map(key => {
                 const value = (formData.get(key) as string) || "";
-                return prisma.site_settings.upsert({
+                return prisma.siteSetting.upsert({
                     where: { key },
                     update: { value },
                     create: { key, value },

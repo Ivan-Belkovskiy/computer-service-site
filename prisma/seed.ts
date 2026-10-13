@@ -10,7 +10,7 @@ async function main() {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(rawPassword, salt);
 
-  await prisma.admin_users.upsert({
+  await prisma.adminUser.upsert({
     where: { login: adminLogin },
     update: {},
     create: {

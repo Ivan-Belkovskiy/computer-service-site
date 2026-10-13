@@ -5,8 +5,17 @@ import PhoneInput from "../PhoneInput/PhoneInput";
 import "./NewOrderModal.css";
 import { createOrder } from "@/app/actions";
 import { usePathname } from "next/navigation";
-import PageTracker from "@/components/Analytics/PageTracker";
 import { trackEvent } from "@/lib/tracking";
+
+type LegalDocumentLink = {
+    id: number;
+    slug: string;
+    title: string;
+    url: string;
+    url_type: "PAGE" | "EXTERNAL";
+    show_in_footer: boolean;
+    show_in_modal: boolean;
+};
 
 interface ValidationErrors {
     name?: boolean;
@@ -15,12 +24,13 @@ interface ValidationErrors {
 }
 
 export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl = "/privacy",
-    offerUrl = "/offer" }: {
+    offerUrl = "/offer", legalDocuments = [] }: {
         isOpened?: boolean;
         onSubmit?: () => void;
         onClose?: () => void;
         privacyUrl?: string;
         offerUrl?: string;
+        legalDocuments?: LegalDocumentLink[];
     }) {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [submitResult, setSubmitResult] = useState<{
@@ -38,6 +48,8 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl 
     const [isAgreed, setIsAgreed] = useState<boolean>(true);
 
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
+    const consentDocs = legalDocuments.filter((d) => d.show_in_modal);
 
     const validateData = (name: string, phone: string, agreed: boolean) => {
         const isNameValid = name.trim().length > 2;
@@ -147,8 +159,10 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl 
                             onChange={(e) => setDescription(e.target.value)}
                         ></textarea>
 
-                        <div className={`new-order-modal__agreement ${validationErrors.agreed ? 'validation-error' : ''}`}>
-                            {/* <label className="new-order-modal__checkbox-label"> */}
+                        <div
+                            className={`new-order-modal__agreement ${validationErrors.agreed ? "validation-error" : ""
+                                }`}
+                        >
                             <input
                                 className="new-order-modal__checkbox"
                                 type="checkbox"
@@ -159,25 +173,25 @@ export default function NewOrderModal({ isOpened, onClose, onSubmit, privacyUrl 
                                 }}
                             />
                             <span>
-                                Я согласен с{" "}
-                                {privacyUrl ? (
-                                    <a href={privacyUrl} target="_blank" rel="noopener noreferrer">
-                                        политикой конфиденциальности
-                                    </a>
+                                Я ознакомлен(а) и согласен(на) со следующими документами:{" "}
+                                {consentDocs.length === 0 ? (
+                                    "условиями обработки заявки"
                                 ) : (
-                                    "политикой конфиденциальности"
-                                )}
-                                {" и "}
-                                {offerUrl ? (
-                                    <a href={offerUrl} target="_blank" rel="noopener noreferrer">
-                                        публичной офертой
-                                    </a>
-                                ) : (
-                                    "публичной офертой"
+                                    consentDocs.map((doc, index) => (
+                                        <span key={doc.id}>
+                                            {index > 0 && ", "}
+                                            <a
+                                                href={doc.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {doc.title}
+                                            </a>
+                                        </span>
+                                    ))
                                 )}
                                 *
                             </span>
-                            {/* </label> */}
                         </div>
                         {renderError('agreed', 'Для отправки формы необходимо согласие')}
 

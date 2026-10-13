@@ -10,10 +10,10 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  
-//   const dbSlug = `/${slug}`;
 
-  const page = await prisma.site_pages.findUnique({
+  //   const dbSlug = `/${slug}`;
+
+  const page = await prisma.sitePage.findUnique({
     where: { slug: slug },
   });
 
@@ -28,23 +28,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
-  
+
   const response = await getSiteSettings();
   const settings = response.data || {};
 
-//   const dbSlug = `/${slug}`;
+  //   const dbSlug = `/${slug}`;
 
-  const pageStructure = await prisma.site_pages.findUnique({
-    where: { slug: slug },
-    include: {
-      sections: {
-        where: { is_active: true },
-        orderBy: { display_order: "asc" },
+  const [pageStructure, customSections, legalDocuments] = await Promise.all([
+    prisma.sitePage.findUnique({
+      where: { slug: slug },
+      include: {
+        sections: {
+          where: { is_active: true },
+          orderBy: { display_order: "asc" },
+        }
       }
-    }
-  });
+    }),
+    prisma.customSection.findMany({}),
+    prisma.legalDocument.findMany({})
+  ]);
 
-  const customSections = await prisma.custom_sections.findMany({});
+  // const customSections = await prisma.customSection.findMany({});
 
   if (!pageStructure) {
     notFound();
@@ -52,10 +56,11 @@ export default async function DynamicPage({ params }: PageProps) {
 
   return (
     <div className={`page-${slug}`}>
-      <SectionRenderer 
-        sections={pageStructure.sections} 
+      <SectionRenderer
+        sections={pageStructure.sections}
         customSections={customSections}
-        settings={settings} 
+        settings={settings}
+        legalDocuments={legalDocuments}
       />
     </div>
   );

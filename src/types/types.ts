@@ -1,3 +1,3 @@
 import { Prisma } from "@prisma/client";
 
-export type Service = Prisma.servicesGetPayload<{}>;
+export type Service = Prisma.ServiceGetPayload<{}>;

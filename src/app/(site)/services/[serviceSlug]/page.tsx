@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     const resolvedParams = await params;
     const slug = resolvedParams.serviceSlug;
 
-    const service = await prisma.services.findUnique({
+    const service = await prisma.service.findUnique({
         where: { slug: slug }
     });
 
@@ -37,9 +37,13 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
     const resolvedParams = await params;
     const slug = resolvedParams.serviceSlug;
 
-    const service = await prisma.services.findUnique({
-        where: { slug: slug }
-    });
+    const [service, legalDocuments] = await Promise.all([
+        prisma.service.findUnique({
+            where: { slug: slug }
+        }),
+        prisma.legalDocument.findMany({})
+    ]);
+
 
     if (!service) {
         notFound();
@@ -81,7 +85,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
                         <h4>Нужна эта услуга?</h4>
                         <p>Оставьте заявку, и мы свяжемся с вами в течение 15 минут!</p>
                     </div>
-                    <ServiceOrderWrapper serviceName={service.name || ""} />
+                    <ServiceOrderWrapper serviceName={service.name || ""} legalDocuments={legalDocuments} />
                     {/* <Link href="/" className="service-detail-page__button">
                     Заказать
                 </Link> */}
@@ -94,7 +98,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
 
 
 export async function generateStaticParams() {
-    const services = await prisma.services.findMany({
+    const services = await prisma.service.findMany({
         select: { slug: true }
     });
 

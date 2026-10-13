@@ -5,8 +5,14 @@ import { updateSettings } from "./actions";
 import { ImageUploader } from "@/components/ControlPanel/ImageUploader/ImageUploader";
 import { updateSiteSetting } from "@/app/actions";
 import { Page } from "../editor/page";
+import { LegalDocumentsManager } from "@/components/ControlPanel/SiteSettings/LegalDocumentManager/LegalDocumentManager";
+import { LegalDocument, SitePage } from "@prisma/client";
 
-export default function SettingsForm({ allPages, initialSettings }: { allPages?: Page[]; initialSettings: Record<string, string> }) {
+export default function SettingsForm({ allPages, initialSettings, documents }: { 
+    allPages?: SitePage[]; 
+    initialSettings: Record<string, string>
+    documents?: LegalDocument[];
+ }) {
     const [state, formAction, isPending] = useActionState(updateSettings, null);
     const [logoUrl, setLogoUrl] = useState('');
 
@@ -42,7 +48,7 @@ export default function SettingsForm({ allPages, initialSettings }: { allPages?:
             data.append('public_offer_type', publicOfferUrl.type);
             data.append('public_offer_url', publicOfferUrl.url);
             formAction(data);
-        }} className="control-form" style={{ maxWidth: '600px', margin: '0 auto' }} onSubmit={() => handleSave(logoUrl)}>
+        }} className="control-form" style={{ maxWidth: '900px', margin: '0 auto' }} onSubmit={() => handleSave(logoUrl)}>
             <h2>Настройки сайта</h2>
 
             {state?.error && (
@@ -92,7 +98,9 @@ export default function SettingsForm({ allPages, initialSettings }: { allPages?:
 
             </fieldset>
 
-            <fieldset style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '16px', marginBottom: '20px' }}>
+            <LegalDocumentsManager initialDocuments={documents || []} allPages={allPages || []} />
+
+            {/* <fieldset style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '16px', marginBottom: '20px' }}>
                 <legend>Правовые документы</legend>
 
                 <div className="form-group">
@@ -130,8 +138,6 @@ export default function SettingsForm({ allPages, initialSettings }: { allPages?:
                         <b>Страница Договора Публичной Оферты</b>
                     </label>
                     <select
-                        // name="public_offer_url"
-                        // id="public_offer_url"
                         defaultValue={publicOfferUrl.type === 'inputUrl' ? '<inputURL>' : ''}
                         onChange={(e) => setPublicOfferUrl({
                             type: (e.target.value === '<inputURL>') ? "inputUrl" : "pageUrl",
@@ -147,21 +153,12 @@ export default function SettingsForm({ allPages, initialSettings }: { allPages?:
                         <span>URL:</span>
                         <input
                             type="text"
-                            // name="privacy_policy_url"
-                            // id="privacy_policy_url"
                             placeholder="/offer или https://..."
                             defaultValue={initialSettings["public_offer_url"] || "/offer"}
                         />
                     </div>}
-                    {/* <input
-                        type="text"
-                        name="public_offer_url"
-                        id="public_offer_url"
-                        placeholder="/offer или https://..."
-                        defaultValue={initialSettings["public_offer_url"] || "/offer"}
-                    /> */}
                 </div>
-            </fieldset>
+            </fieldset> */}
 
             <fieldset style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '16px', marginBottom: '24px' }}>
                 <legend>Контактная информация</legend>

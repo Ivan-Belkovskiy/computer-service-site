@@ -11,7 +11,7 @@ export default async function CustomSectionEditorPage({
     const resolved = await params;
     const id = parseInt(resolved.id, 10);
 
-    const sectionData = await prisma.custom_sections.findUnique({
+    const sectionData = await prisma.customSection.findUnique({
         where: { id }
     });
 

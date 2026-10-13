@@ -27,7 +27,19 @@ const prismaClientSingleton = () => {
     //     // connectionLimit: 5,
     //     ssl: true
     // });
-    const adapter = new PrismaMariaDb('mysql://root:Dragon851171!@127.0.0.1:3306/computer_service_site_db');
+    // const adapter = new PrismaMariaDb('mysql://root:Dragon851171!@127.0.0.1:3306/computer_service_site_db');
+
+
+    const adapter = new PrismaMariaDb({
+        host: process.env.DB_HOST ?? "127.0.0.1",
+        port: Number(process.env.DB_PORT ?? 3306),
+        user: process.env.DB_USER!,
+        password: process.env.DB_PASS!,
+        database: process.env.DB_NAME!,
+        connectionLimit: 5,
+
+        ...(process.env.NODE_ENV === "production" ? {} : { allowPublicKeyRetrieval: true, ssl: false }),
+    });
 
     // writeFileSync(path.join(process.cwd(), 'log.txt'), String(process.env.DATABASE_URL))
 

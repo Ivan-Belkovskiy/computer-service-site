@@ -12,7 +12,7 @@ export default async function EditServicePage({
     const resolved = await params;
     const serviceId = parseInt(resolved.id, 10);
 
-    const service = await prisma.services.findUnique({
+    const service = await prisma.service.findUnique({
         where: {
             id: serviceId,
         }

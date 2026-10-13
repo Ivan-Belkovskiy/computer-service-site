@@ -19,7 +19,7 @@ export async function updateOrder(prevState: ActionState, formData: FormData): P
     const total_price = totalPriceRaw ? parseInt(totalPriceRaw, 10) : null;
 
     try {
-        await prisma.orders.update({
+        await prisma.order.update({
             where: { id: orderId },
             data: { status, master_id, total_price },
         });

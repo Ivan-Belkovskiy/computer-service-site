@@ -57,8 +57,8 @@ export default function InteractiveOrderTable({
                                 {/* <td>#{order.id}</td> */}
                                 <td>{formatDate(order.created_at)}</td>
                                 <td>
-                                    <div className="font-bold">{order.clients?.full_name || "Не указан"}</div>
-                                    <div className="text-sm text-gray-500">{order.clients?.phone || ""}</div>
+                                    <div className="font-bold">{order.client?.full_name || "Не указан"}</div>
+                                    <div className="text-sm text-gray-500">{order.client?.phone || ""}</div>
                                 </td>
                                 <td className="orders-table__desc">{order.description || "—"}</td>
                                 <td>
@@ -66,7 +66,7 @@ export default function InteractiveOrderTable({
                                         {order.status ? translations[order.status] : "—"}
                                     </span>
                                 </td>
-                                <td>{order.masters?.full_name || "Не назначен"}</td>
+                                <td>{order.master?.full_name || "Не назначен"}</td>
                                 <td className="orders-table__price">{order.total_price ? `${order.total_price} BYN` : "—"}</td>
                             </tr>
                         ))

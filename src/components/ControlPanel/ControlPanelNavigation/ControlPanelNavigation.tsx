@@ -13,6 +13,8 @@ export default function ControlPanelNavigation({ settings }: { settings?: Record
 
     const isCustomSectionEditor = url.startsWith('/controlpanel/editor/custom-sections/');
 
+    const activeOnUrl = (inp: string) => url.startsWith(`/controlpanel/${inp}`) ? 'current-url' : '';
+
     if (url !== '/controlpanel/login') return (
         <div className="control-panel-navigation__container">
             <nav className="control-panel-navigation">
@@ -38,19 +40,19 @@ export default function ControlPanelNavigation({ settings }: { settings?: Record
                         </li>
                     ) : (
                         <>
-                            <li className="control-panel-navigation__button link">
+                            <li className={`control-panel-navigation__button link ${activeOnUrl('clients')}`}>
                                 <Link href="/controlpanel/clients">Клиенты</Link>
                             </li>
-                            <li className="control-panel-navigation__button link">
+                            <li className={`control-panel-navigation__button link ${activeOnUrl('orders')}`}>
                                 <Link href="/controlpanel/orders">Заявки</Link>
                             </li>
-                            <li className="control-panel-navigation__button link">
+                            <li className={`control-panel-navigation__button link ${activeOnUrl('services')}`}>
                                 <Link href="/controlpanel/services">Услуги и Цены</Link>
                             </li>
-                            <li className="control-panel-navigation__button link">
+                            <li className={`control-panel-navigation__button link ${activeOnUrl('editor')}`}>
                                 <Link href="/controlpanel/editor">Редактор сайта</Link>
                             </li>
-                            <li className="control-panel-navigation__button link">
+                            <li className={`control-panel-navigation__button link ${activeOnUrl('settings')}`}>
                                 <Link href="/controlpanel/settings">Настройки сайта</Link>
                             </li>
                         </>

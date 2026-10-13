@@ -189,7 +189,7 @@ export default function Editor({
         const result = await updatePage(pageId, {
             name: pageData.name,
             slug: pageData.slug,
-            displayInNavigation: pageData.displayInNavigation,
+            display_in_navigation: pageData.display_in_navigation,
         });
         setDataSaving(false);
     }
@@ -399,8 +399,8 @@ export default function Editor({
                                                 type="checkbox"
                                                 className="site-editor__checkbox"
                                                 disabled={currentPage?.slug === '/'}
-                                                checked={pageData?.displayInNavigation ? true : false}
-                                                onChange={(e) => updatePageData('displayInNavigation', e.target.checked)}
+                                                checked={pageData?.display_in_navigation ? true : false}
+                                                onChange={(e) => updatePageData('display_in_navigation', e.target.checked)}
                                             />
                                         </div>
                                         {/* <select

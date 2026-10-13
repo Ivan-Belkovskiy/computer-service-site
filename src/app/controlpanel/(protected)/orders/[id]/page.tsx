@@ -13,11 +13,11 @@ export default async function OrderDetailsPage({
     const orderId = parseInt(resolvedParams.id, 10);
 
     const [order, allMasters] = await Promise.all([
-        prisma.orders.findUnique({
+        prisma.order.findUnique({
             where: { id: orderId },
-            include: { clients: true, masters: true },
+            include: { client: true, master: true },
         }),
-        prisma.masters.findMany({ orderBy: { full_name: "asc" } })
+        prisma.master.findMany({ orderBy: { full_name: "asc" } })
     ]);
 
     if (!order) notFound();
@@ -37,8 +37,8 @@ export default async function OrderDetailsPage({
                 <div className="info-section">
                     <div className="info-card">
                         <h3>Данные клиента</h3>
-                        <p><strong>Имя:</strong> {order.clients?.full_name || "Не указано"}</p>
-                        <p><strong>Телефон:</strong> {order.clients?.phone || "Не указан"}</p>
+                        <p><strong>Имя:</strong> {order.client?.full_name || "Не указано"}</p>
+                        <p><strong>Телефон:</strong> {order.client?.phone || "Не указан"}</p>
                         <p><strong>Адрес ремонта:</strong> {order.address || "В мастерской"}</p>
                     </div>
 

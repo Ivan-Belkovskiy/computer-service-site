@@ -17,25 +17,29 @@ export default async function Home() {
   const response = await getSiteSettings();
   const settings = response.data || {};
 
-  const pageStructure = await prisma.site_pages.findUnique({
-    where: { slug: "/" },
-    include: {
-      sections: {
-        where: { is_active: true },
-        orderBy: { display_order: "asc" },
+  const [pageStructure, legalDocuments] = await Promise.all([
+    prisma.sitePage.findUnique({
+      where: { slug: "/" },
+      include: {
+        sections: {
+          where: { is_active: true },
+          orderBy: { display_order: "asc" },
+        }
       }
-    }
-  });
+    }),
+    prisma.legalDocument.findMany({})
+  ]);
 
   // trackEvent('page_open');
 
   return (
     <div className="main-page">
       <PageTracker path="/" event="page_open" />
-      <SectionRenderer 
+      <SectionRenderer
         customSections={[]}
-        sections={pageStructure?.sections || []} 
-        settings={settings} 
+        sections={pageStructure?.sections || []}
+        settings={settings}
+        legalDocuments={legalDocuments}
       />
     </div>
   );

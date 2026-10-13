@@ -15,10 +15,10 @@ const deviceTranslations: Record<string, string> = {
 };
 
 export default async function ServicesPage() {
-    const allServices = await prisma.services.findMany({
+    const allServices = await prisma.service.findMany({
         orderBy: { 
             // name: "asc",
-            displayOrder: 'asc',
+            display_order: 'asc',
          }
     });
 
@@ -67,7 +67,7 @@ export default async function ServicesPage() {
                                             {services.map((service) => (
                                                 <tr key={service.id}>
                                                     <td className="text-center font-mono text-sm text-gray-400">
-                                                        {service.displayOrder}
+                                                        {service.display_order}
                                                     </td>
                                                     <td>
                                                         <div className="service-name">{service.name}</div>

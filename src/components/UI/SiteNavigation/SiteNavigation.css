@@ -30,7 +30,8 @@
     background-position-x: -50%;
 }
 
-.site-navigation__button.link:hover {
+.site-navigation__button.link:hover,
+.site-navigation__button.link.current-url {
     background-position-x: 90%;
     color: #fff;
     cursor: pointer;

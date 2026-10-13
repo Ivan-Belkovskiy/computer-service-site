@@ -4,6 +4,7 @@ import "./ContactsSection.css";
 import SVGIcon from "@/components/SVGIcon/SVGIcon";
 import { useState } from "react";
 import NewOrderModal from "@/components/UI/NewOrderModal/NewOrderModal";
+import { LegalDocumentLink } from "@/components/AppLayout";
 
 interface ContactInfo {
     id: number;
@@ -20,9 +21,10 @@ interface ContactInfo {
 
 interface ContactsSectionProps {
     initialSettings: Record<string, string>;
+    legalDocuments?: LegalDocumentLink[];
 }
 
-export default function ContactsSection({ initialSettings }: ContactsSectionProps) {
+export default function ContactsSection({ initialSettings, legalDocuments }: ContactsSectionProps) {
     const [isModalOpened, setModalOpened] = useState(false);
 
     const CONTACT_INFORMATION: ContactInfo[] = [
@@ -100,6 +102,8 @@ export default function ContactsSection({ initialSettings }: ContactsSectionProp
             <NewOrderModal
                 isOpened={isModalOpened}
                 onClose={() => setModalOpened(false)}
+
+                legalDocuments={legalDocuments}
                 // onSubmit={() => setModalOpened(false)}
             />
         </section>

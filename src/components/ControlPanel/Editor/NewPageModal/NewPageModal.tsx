@@ -27,7 +27,7 @@ export default function NewPageModal({ isOpened, onClose, onSubmit }: {
     const [name, setName] = useState<string>("");
     const [url, setURL] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [displayInNavigation, setDisplayInNavigation] = useState(true);
+    const [display_in_navigation, setDisplayInNavigation] = useState(true);
 
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
@@ -46,7 +46,7 @@ export default function NewPageModal({ isOpened, onClose, onSubmit }: {
     const handleSubmit = async () => {
         if (validateData(name, url)) {
             setLoading(true);
-            const res = await createPage(name, url, displayInNavigation, description);
+            const res = await createPage(name, url, display_in_navigation, description);
             setLoading(false);
             // setSubmitResult(res);
             if (res.success) onSubmit?.();
@@ -125,7 +125,7 @@ export default function NewPageModal({ isOpened, onClose, onSubmit }: {
                     <input
                         type="checkbox"
                         className="new-page-modal__checkbox"
-                        checked={displayInNavigation}
+                        checked={display_in_navigation}
                         onChange={(e) => setDisplayInNavigation(e.target.checked)}
                     />
                 </div>

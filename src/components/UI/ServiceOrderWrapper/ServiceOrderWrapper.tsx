@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import NewOrderModal from "@/components/UI/NewOrderModal/NewOrderModal";
+import { LegalDocumentLink } from "@/components/AppLayout";
 
 interface ServiceOrderWrapperProps {
     serviceName: string;
+    legalDocuments?: LegalDocumentLink[];
 }
 
-export default function ServiceOrderWrapper({ serviceName }: ServiceOrderWrapperProps) {
+export default function ServiceOrderWrapper({ serviceName, legalDocuments }: ServiceOrderWrapperProps) {
     const [isModalOpened, setModalOpened] = useState(false);
 
     return (
@@ -23,6 +25,8 @@ export default function ServiceOrderWrapper({ serviceName }: ServiceOrderWrapper
             <NewOrderModal 
                 isOpened={isModalOpened} 
                 onClose={() => setModalOpened(false)} 
+
+                legalDocuments={legalDocuments}
                 // onSubmit={() => setModalOpened(false)}
             />
         </>

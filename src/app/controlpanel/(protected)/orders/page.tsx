@@ -11,10 +11,10 @@ const statusTranslations: Record<string, string> = {
     CANCELLED: "Отменена",
 };
 
-export type Order = Prisma.ordersGetPayload<{
+export type Order = Prisma.OrderGetPayload<{
     include: {
-        clients: true,
-        masters: true,
+        client: true,
+        master: true,
     },
 }>;
 
@@ -26,9 +26,9 @@ export default async function OrdersPage({ searchParams }: {
 
     const filterClientID = (typeof params.filters_clientId === 'string') ? Number(params.filters_clientId) : undefined;
 
-    // const filterClientName = await prisma.clients
+    // const filterClientName = await prisma.client
 
-    // const orders = await prisma.orders.findMany({
+    // const orders = await prisma.order.findMany({
     //     orderBy: { created_at: "desc" },
     //     include: {
     //         clients: true,
@@ -40,15 +40,15 @@ export default async function OrdersPage({ searchParams }: {
         orders,
         filterClientName
     ] = await Promise.all([
-        prisma.orders.findMany({
+        prisma.order.findMany({
             where: filterClientID ? { client_id: filterClientID } : undefined,
             orderBy: { created_at: "desc" },
             include: {
-                clients: true,
-                masters: true,
+                client: true,
+                master: true,
             },
         }),
-        (typeof filterClientID === 'number') ? (await prisma.clients.findUnique({
+        (typeof filterClientID === 'number') ? (await prisma.client.findUnique({
             where: { id: filterClientID },
             select: { full_name: true },
         }))?.full_name : undefined

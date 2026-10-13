@@ -60,7 +60,8 @@
     padding: 0;
 }
 
-.control-panel-navigation__button.link:hover {
+.control-panel-navigation__button.link:hover,
+.control-panel-navigation__button.link.current-url {
     background-position-x: 90%;
     color: #fff;
     cursor: pointer;

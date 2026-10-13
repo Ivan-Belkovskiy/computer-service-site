@@ -14,7 +14,7 @@ import { deleteFile } from "./actions/upload";
 
 const SESSION_EXPIRATION = 7 * 24 * 60 * 60 * 1000; 
 
-export type Service = Prisma.servicesGetPayload<{}>;
+export type Service = Prisma.ServiceGetPayload<{}>;
 
 export type ActionState = {
   success: boolean;
@@ -30,7 +30,7 @@ export async function loginAdmin(prevState: ActionState, formData: FormData) {
   }
 
   try {
-    const admin = await prisma.admin_users.findUnique({ where: { login } });
+    const admin = await prisma.adminUser.findUnique({ where: { login } });
     if (!admin) {
       return { success: false, error: "Неверный логин или пароль" };
     }
@@ -66,20 +66,20 @@ export async function findOrAddClient(name: string, phone: string, email?: strin
     if (!name || !phone) return { success: false, error: "Имя и телефон обязательны" };
 
     try {
-        let client = await prisma.clients.findUnique({
+        let client = await prisma.client.findUnique({
             where: { phone }
         });
 
         if (client) {
             if (client.full_name !== name || (email && client.email !== email)) {
-                client = await prisma.clients.update({
+                client = await prisma.client.update({
                     where: { phone },
                     data: { full_name: name, email: email || client.email }
                 });
             }
             return { success: true, data: client };
         } else {
-            const newClient = await prisma.clients.create({
+            const newClient = await prisma.client.create({
                 data: {
                     full_name: name,
                     phone,
@@ -110,7 +110,7 @@ export async function createOrder(
             return { success: false, error: "Не удалось привязать клиента к заявке" };
         }
 
-        const orderResult = await prisma.orders.create({
+        const orderResult = await prisma.order.create({
             data: {
                 client_id: clientResult.data.id,
                 description,
@@ -128,9 +128,9 @@ export async function createOrder(
 
 export async function getServices() {
     try {
-        const data = await prisma.services.findMany({
+        const data = await prisma.service.findMany({
             orderBy: [
-                { displayOrder: 'desc' }
+                { display_order: 'desc' }
             ]
         });
 
@@ -144,19 +144,19 @@ export async function getServices() {
 export async function updateServices(d: Service[]) {
     try {
         const result = await prisma.$transaction(async (tx) => {
-            await tx.services.deleteMany({});
+            await tx.service.deleteMany({});
 
-            return await tx.services.createMany({
+            return await tx.service.createMany({
                 data: d.map(s => ({
                     name: s.name,
                     price: s.price,
                     unit: s.unit,
                     slug: s.slug,
                     isStartingPrice: s.isStartingPrice,
-                    category: s.category,
+                    category: s.category_id,
                     description: s.description,
                     device_type: s.device_type,
-                    displayOrder: s.displayOrder,
+                    display_order: s.display_order,
                 }))
             });
         });
@@ -215,7 +215,7 @@ export async function loadMetadata() {
 
 export async function getSiteSettings() {
   try {
-    const settingsArray = await prisma.site_settings.findMany();
+    const settingsArray = await prisma.siteSetting.findMany();
     
     const settingsObject = settingsArray.reduce((acc, item) => {
       acc[item.key] = item.value;
@@ -231,7 +231,7 @@ export async function getSiteSettings() {
 
 export async function updateSiteSetting(key: string, value: string) {
   try {
-    const currentSetting = await prisma.site_settings.findUnique({
+    const currentSetting = await prisma.siteSetting.findUnique({
       where: { key },
     });
 
@@ -243,7 +243,7 @@ export async function updateSiteSetting(key: string, value: string) {
       await deleteFile(currentSetting.value);
     }
 
-    await prisma.site_settings.upsert({
+    await prisma.siteSetting.upsert({
       where: { key },
       update: { value },
       create: { key, value },
@@ -267,7 +267,7 @@ export async function updateOrder(formData: FormData) {
     const total_price = totalPriceRaw ? parseInt(totalPriceRaw, 10) : null;
 
     try {
-        await prisma.orders.update({
+        await prisma.order.update({
             where: { id: orderId },
             data: {
                 status,

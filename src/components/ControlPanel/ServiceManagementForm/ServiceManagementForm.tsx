@@ -165,13 +165,13 @@ export default function ServiceManagementForm({ uiAction = "create", actionFn, e
             </div>
 
             <div className="form-group">
-                <label htmlFor="displayOrder">Порядок отображения</label>
+                <label htmlFor="display_order">Порядок отображения</label>
                 <input
                     type="number"
-                    name="displayOrder"
-                    id="displayOrder"
+                    name="display_order"
+                    id="display_order"
                     min="1"
-                    defaultValue={editingService?.displayOrder || 10}
+                    defaultValue={editingService?.display_order || 10}
                 />
                 <small style={{ color: '#6b7280', fontSize: '12px', display: 'block', marginTop: '4px' }}>
                     Чем меньше число, тем выше услуга будет в списке таблицы.

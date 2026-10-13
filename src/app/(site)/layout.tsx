@@ -12,22 +12,35 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const response = await getSiteSettings();
+  const [response, pageLinks, legalDocuments] = await Promise.all([
+    getSiteSettings(),
+    prisma.sitePage.findMany({
+      where: { display_in_navigation: true },
+      select: { id: true, name: true, slug: true },
+    }),
+    prisma.legalDocument.findMany({
+      where: { is_active: true },
+      orderBy: [{ display_order: "asc" }, { id: "asc" }],
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        url: true,
+        url_type: true,
+        show_in_footer: true,
+        show_in_modal: true,
+      },
+    }),
+  ]);
+
   const settings = response.data || {};
 
-  const pageLinks = await prisma.site_pages.findMany({
-    where: {
-      displayInNavigation: true
-    },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    }
-  });
-
   return (
-    <AppLayout siteSettings={settings} pageLinks={pageLinks}>
+    <AppLayout
+      siteSettings={settings}
+      pageLinks={pageLinks}
+      legalDocuments={legalDocuments}
+    >
       {children}
     </AppLayout>
   );

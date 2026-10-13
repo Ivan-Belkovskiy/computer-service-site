@@ -5,51 +5,36 @@ import SiteFooter from "./Site/SiteFooter/SiteFooter";
 import SiteNavigation from "./UI/SiteNavigation/SiteNavigation";
 import TimeOnPageTracker from "./Analytics/TimeOnPageTracker";
 
-export default function AppLayout({ children, siteSettings, pageLinks }: {
+export type LegalDocumentLink = {
+  id: number;
+  slug: string;
+  title: string;
+  url: string;
+  url_type: "PAGE" | "EXTERNAL";
+  show_in_footer: boolean;
+  show_in_modal: boolean; 
+};
+
+export default function AppLayout({
+  children,
+  siteSettings,
+  pageLinks,
+  legalDocuments = [],
+}: {
   children?: ReactNode;
   siteSettings?: Record<string, string>;
-  pageLinks: {
-    id: number;
-    name: string;
-    slug: string;
-  }[];
+  pageLinks: { id: number; name: string; slug: string }[];
+  legalDocuments?: LegalDocumentLink[];
 }) {
-
-  // useEffect(() => {
-
-  //   const keyDownHandler = (e: KeyboardEvent) => {
-  //     if (e.key === 'F12') {
-  //       // alert('Вход в инструменты разработчика запрещен!!!')
-  //       e.preventDefault();
-  //       return false;
-  //       }
-  //   }
-
-  //   const contextMenuHandler = (e: Event) => {
-  //     // alert('Контекстное меню запрещено!');
-  //     e.preventDefault();
-  //     return false;
-  //   }
-
-  //   if (typeof window !== 'undefined') {
-  //     window.addEventListener('contextmenu', contextMenuHandler);
-  //     window.addEventListener('keydown', keyDownHandler);
-  //     }
-
-  //   return () => {
-  //     if (typeof window !== 'undefined') {
-  //     window.removeEventListener('contextmenu', contextMenuHandler);
-  //     window.removeEventListener('keydown', keyDownHandler);
-  //     }
-  //   }
-  // }, []);
-
   return (
     <>
-      {/* <TimeOnPageTracker /> */}
       <SiteNavigation settings={siteSettings} pageLinks={pageLinks} />
       <main>{children}</main>
-      <SiteFooter settings={siteSettings} pageLinks={pageLinks} />
+      <SiteFooter
+        settings={siteSettings}
+        pageLinks={pageLinks}
+        legalDocuments={legalDocuments}
+      />
     </>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import SVGIcon from "../../SVGIcon/SVGIcon";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import ExpandableSidePanel from "../ExpandableSidePanel/ExpandableSidePanel";
 import ContactsBlock from "../ContactsBlock/ContactsBlock";
 
@@ -20,10 +21,12 @@ export default function SiteNavigation({ settings, menuOnly, pageLinks }: {
 
     const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 
+    const url = usePathname();
+
     const renderMenu = (inFooter?: boolean) => (
         <ul className={(inFooter) ? `site-navigation__menu` : `site-navigation__middle --desktop-only`}>
             {pageLinks?.map(l => (
-                <li className="site-navigation__button link" key={l.id}>
+                <li className={`site-navigation__button link ${url === ((l.slug !== '/') ? `/${l.slug}` : l.slug) ? 'current-url' : ''}`} key={l.id}>
                     <Link href={(l.slug !== '/') ? `/${l.slug}` : l.slug} >{l.name}</Link>
                 </li>
             ))}
